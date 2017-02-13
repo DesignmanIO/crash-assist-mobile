@@ -1,0 +1,19 @@
+.ArrayField {
+  margin-bottom: 15px;
+  ons-row {
+    border-bottom: 2px dashed #3F81B1;
+    margin-bottom: 15px;
+    ons-col {
+      &:first-child {
+        h4{
+          margin-top: 0;
+        }
+        margin-right: 15px;
+        padding-right: 15px;
+      }
+    }
+  }
+  .addButton {
+    float: right;
+  }
+}

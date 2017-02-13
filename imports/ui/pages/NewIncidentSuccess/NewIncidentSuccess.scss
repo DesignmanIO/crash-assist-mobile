@@ -1,0 +1,19 @@
+#new-incident-success {
+  color: #8AD300;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  > * {
+    margin: 0;
+  }
+  ons-progress-bar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    .progress-bar__primary {
+      background-color: #8ad300;
+    }
+  }
+}

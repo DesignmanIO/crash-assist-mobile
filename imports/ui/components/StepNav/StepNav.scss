@@ -1,0 +1,126 @@
+$stepper-spacing: 15px;
+$stepper-color: #3F81B1;
+
+.step-nav {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, .5);
+
+  .stepper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px $stepper-spacing;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+    .bar {
+      background-color: $stepper-color;
+      height: 4px;
+      position: absolute;
+      z-index: 0;
+      top: calc(50% - 2px);
+      left: $stepper-spacing;
+      right: $stepper-spacing;
+      border-radius: 12px;
+      box-shadow: inset 0 0 2px 0px rgba(0,0,0,.5);
+    }
+
+    #steps {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 22px;
+
+      .step {
+        background-color: $stepper-color;
+        width: 22px;
+        height: 22px;
+        max-width: 12px;
+        max-height: 12px;
+        transition: max-width .1s ease-out, max-height .1s ease-out;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 12px;
+        box-shadow: inset 0 0 4px 0px rgba(0,0,0,.5);
+        z-index: 1;
+        .clickArea{
+          height: 40px;
+          width: 40px;
+          position: absolute;
+        }
+        span {
+          display: none;
+        }
+
+        &.active {
+          max-width: 22px;
+          max-height: 22px;
+          text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+          span {
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+  }
+
+  footer {
+    display: flex;
+
+    .placeholder {
+      width: 70px;
+      border: 1px solid transparent;
+    }
+    .navButton {
+      //border: 1px solid;
+      //margin-bottom: 1px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 70px;
+      color: #B2B2B;
+
+      span {
+        margin-top: 7px;
+      }
+
+      &.active {
+        background-color: #B7E173;
+        color: #2B2B2B;
+      }
+    }
+    .contextual {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 8px;
+      min-height: 90px;
+
+      color: #2B2B2B;
+
+      h1 {
+        font-size: 20px;
+        font-weight: normal;
+        margin: 0;
+      }
+
+      p {
+        margin: 6px 0;
+        font-size: 14px;
+      }
+    }
+  }
+
+}
