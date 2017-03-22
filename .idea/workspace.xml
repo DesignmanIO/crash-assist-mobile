@@ -2,38 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a15d1127-b225-4ea9-9abc-e0d2383b25b9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/ArrayInput/ArrayInput.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/ArrayInput/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/DateInput/DateInput.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/DateInput/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/EmailInput/EmailInput.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/EmailInput/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/NumberInput/NumberInput.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/NumberInput/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/PhotoInput/PhotoInput.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/PhotoInput/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/TelInput/TelInput.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/TelInput/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/TextInput/TextInput.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/TextInput/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/TextareaInput/TextareaInput.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/TextareaInput/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/components/FormControls/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/imports/api/collections/Incidents.js" afterPath="$PROJECT_DIR$/schema/Incidents.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/MainDrawer/MainDrawer.js" afterPath="$PROJECT_DIR$/components/MainDrawer/MainDrawer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/theme.js" afterPath="$PROJECT_DIR$/config/theme.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/shared/SimpleSchemaExtension.js" afterPath="$PROJECT_DIR$/imports/shared/SimpleSchemaExtension.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/shared/collections/Incidents.js" afterPath="$PROJECT_DIR$/imports/shared/collections/Incidents.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/shared/collections/Users.js" afterPath="$PROJECT_DIR$/imports/shared/collections/Users.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/FormElements/EmailInput.jsx" afterPath="$PROJECT_DIR$/imports/ui/FormElements/EmailInput.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/FormElements/NumberInput.jsx" afterPath="$PROJECT_DIR$/imports/ui/FormElements/NumberInput.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/FormElements/TextInput.jsx" afterPath="$PROJECT_DIR$/imports/ui/FormElements/TextInput.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.js" afterPath="$PROJECT_DIR$/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/Home/Home.js" afterPath="$PROJECT_DIR$/views/Home/Home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/NewIncident/NewIncident.js" afterPath="$PROJECT_DIR$/views/NewIncident/NewIncident.js" />
     </list>
     <ignored path="crash-assist-rn.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,7 +51,7 @@
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
-              <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+              <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -578,12 +547,12 @@
       <workItem from="1489155731683" duration="2223000" />
       <workItem from="1489160352880" duration="7494000" />
       <workItem from="1489187561218" duration="15000" />
-      <workItem from="1490208688008" duration="2940000" />
+      <workItem from="1490208688008" duration="2999000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34774000" />
+    <option name="totallyTimeSpent" value="34833000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -970,7 +939,7 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
-          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+          <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
           <folding />
         </state>
       </provider>
