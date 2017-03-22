@@ -1,22 +1,22 @@
 import React, {Component} from 'react';
 
-if (Meteor.isClient) {
-    onsen = require('onsenui');
-    Ons = require('react-onsenui');
-    Input = Ons.Input;
-}
+// if (Meteor.isClient) {
+//     onsen = require('onsenui');
+//     Ons = require('react-onsenui');
+//     Input = Ons.Input;
+// }
 
 
-const propTypes = {
-    changeOnKeyDown: React.PropTypes.bool,
-    fieldType: React.PropTypes.string
-};
-
-const defaultProps = {
-    changeOnKeyDown: true
-};
 
 export default class TextInput extends Component {
+    static propTypes = {
+      changeOnKeyDown: React.PropTypes.bool,
+      fieldType: React.PropTypes.string,
+    };
+
+    static defaultProps = {
+      changeOnKeyDown: true,
+    };
 
     constructor(props) {
         super(props);
@@ -65,9 +65,6 @@ export default class TextInput extends Component {
         );
     }
 }
-
-TextInput.propTypes = propTypes;
-TextInput.defaultProps = defaultProps;
 
 
 // password

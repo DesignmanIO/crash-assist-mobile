@@ -2,13 +2,13 @@
  * Created by Julian on 9/15/16.
  */
 
-import {BaseModel} from 'meteor/socialize:base-model';
+// import {BaseModel} from 'meteor/socialize:base-model';
 import {Incidents} from './Incidents.js';
-import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 // import {Ground} from 'meteor/ground:db';
+import Meteor from 'react-native-meteor';
 
-
-const Users = Meteor.users;
+const Users = Meteor.collection('users');
 
 //collection hooks
 
@@ -24,33 +24,33 @@ const Users = Meteor.users;
 // Users.before.findOne((userId, selector, options) => {});
 // Users.after.findOne((userId, selector, options, doc) => {});
 
-class User extends BaseModel {
-    constructor(document) {
-        super(document);  //Must call super passing in the document.
-    }
-
-    incidents() {
-        return Incidents.find({user_id: this._id});
-    }
-
-    // forms() {
-    //     return UserForms.find({user_id: this._id});
-    // }
-    //
-    // inputs() {
-    //     return UserInputs.find({user_id: this._id});
-    // }
-}
-
-Users.allow({
-    insert(userId, userIncident){
-    },
-    update(userId, userIncident){
-    },
-    remove(userId, userIncident) {
-    }
-});
+// class User extends BaseModel {
+//     constructor(document) {
+//         super(document);  //Must call super passing in the document.
+//     }
+//
+//     incidents() {
+//         return Incidents.find({user_id: this._id});
+//     }
+//
+//     // forms() {
+//     //     return UserForms.find({user_id: this._id});
+//     // }
+//     //
+//     // inputs() {
+//     //     return UserInputs.find({user_id: this._id});
+//     // }
+// }
+//
+// Users.allow({
+//     insert(userId, userIncident){
+//     },
+//     update(userId, userIncident){
+//     },
+//     remove(userId, userIncident) {
+//     }
+// });
 
 // Ground.Collection(Users);
 
-export {Users, User};
+export {Users};

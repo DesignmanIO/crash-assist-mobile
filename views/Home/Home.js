@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {View, Button, Modal, Image, Text, Heading} from '@shoutem/ui';
-// import Icon from 'react-native-vector-icons/Ionicons';
+import {Constants} from 'exponent';
 import {connectStyle} from '@shoutem/theme';
-
-import Meteor, {createContainer} from 'react-native-meteor';
+import Meteor, {createContainer, getData} from 'react-native-meteor';
+import {AsyncStorage, Alert} from 'react-native';
+// import Icon from 'react-native-vector-icons/Ionicons';
 
 // import './Landing.scss';
 
@@ -14,9 +15,17 @@ class Home extends Component {
     // this.state = {};
   }
 
-  componentDidMount() {
-    if (Meteor.userId()) {
+  async componentWillMount() {
+    // console.log(Constants.deviceId, Constants);
+    const token = await AsyncStorage.getItem('reactnativemeteor_usertoken');
+    if (token) {
       console.log('should be logged in');
+    } else {
+      Meteor.call('login', {deviceId: Constants.deviceId}, (error, result) => {
+        AsyncStorage.setItem('reactnativemeteor_usertoken', result.token);
+        getData()._tokenIdSaved = result.token;
+        Meteor._userIdSaved = result.id;
+      })
     }
   }
 
@@ -92,16 +101,31 @@ class Home extends Component {
   //     )
   //   }
   // };
+  goToIncident() {
+    const {navigation} = this.props;
+    let incidentId;
+    if (!Meteor.userId()){
+      Alert.alert('Not logged in! Something\'s wrong...');
+    }
+    if (this.props.incompleteIncident) {
+      incidentId = this.props.incompleteIncident._id;
+    } else {
+      incidentId = Meteor.collection('incidents').insert({completed: false, userId: Meteor.userId()}, (err, res) => console.log(err,res));
+    }
+    console.log(incidentId);
+    navigation.navigate('NewIncident', {incidentId});
+  }
 
   render() {
-    const {style, navigation} = this.props;
+    console.log(this.props);
+    const {style} = this.props;
     return (
       <View style={style.wrapper}>
         <Heading styleName="h-center">Remain Calm, We'll help you through this!</Heading>
         <Image/>
-        <Button onPress={() => navigation.navigate('NewIncident')}>
+        <Button onPress={() => this.goToIncident()}>
           <Text>
-            {this.props.incompleteIncidentExists ? "Continue Incident" : "New Incident"}
+            {this.props.incompleteIncident ? "Continue Incident" : "New Incident"}
           </Text>
         </Button>
       </View>
@@ -111,17 +135,18 @@ class Home extends Component {
 
 Home.propTypes = {
   style: React.PropTypes.object,
-  incompleteIncidentExists: React.PropTypes.bool,
+  incompleteIncident: React.PropTypes.object,
   completeIncidents: React.PropTypes.bool,
 };
 
 export default createContainer((props) => {
   const pastIncidentsHandle = Meteor.subscribe('PastIncidents');
   // const loading = !pastIncidentsHandle.ready();
-  const pastIncidents = Meteor.collection('Incidents').find({completed: true});
+  const pastIncidents = Meteor.collection('incidents').find({completed: true});
   const hideLoginDialog = true; //Meteor.user() || {}, "profile", "hideLoginDialog") || true;
+  console.log(Meteor.collection('incidents').find({}), Meteor.userId());
   return {
-    incompleteIncidentExists: !!Meteor.collection('Incidents').findOne({completed: false}),
+    incompleteIncident: Meteor.collection('incidents').findOne({completed: false}),
     completeIncidents: !!pastIncidents.length,
     hideLoginDialog
   }

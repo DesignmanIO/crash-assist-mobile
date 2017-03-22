@@ -5,19 +5,44 @@
   "author": null,
   "private": true,
   "main": "main.js",
+  "scripts": {
+    "postinstall": "rn-nodeify --install fs,dgram,process,path,console --hack"
+  },
   "dependencies": {
     "@exponent/vector-icons": "~4.0.0",
     "@shoutem/theme": "^0.8.10",
-    "@shoutem/ui": "^0.10.9",
+    "@shoutem/ui": "^0.10.13",
+    "asyncstorage-down": "^3.1.1",
+    "console-browserify": "^1.1.0",
     "exponent": "^13.1.0",
+    "hoist-non-react-statics": "^1.2.0",
+    "meteor-check": "git+https://github.com/mrbigmouth/npm-meteor-check.git",
     "moment": "^2.15.1",
+    "path-browserify": "0.0.0",
+    "process": "^0.11.9",
     "react": "~15.4.0",
     "react-native": "https://github.com/exponent/react-native/archive/sdk-13.0.3.tar.gz",
     "react-native-htmlview": "^0.5.0",
+    "react-native-level-fs": "^3.0.0",
     "react-native-meteor": "^1.0.3",
+    "react-native-modal-datetime-picker": "^3.0.1",
     "react-native-swiper": "^1.5.4",
-    "react-navigation": "^1.0.0-beta.3",
-    "simpl-schema": "^0.2.1",
-    "simple-react-form": "^1.8.1"
+    "react-native-udp": "^1.2.9",
+    "react-navigation": "^1.0.0-beta.6",
+    "rn-nodeify": "^7.0.1",
+    "simpl-schema": "^0.2.3",
+    "simple-react-form": "DesignmanIO/simple-react-form"
+  },
+  "react-native": {
+    "fs": "react-native-level-fs",
+    "console": "console-browserify",
+    "path": "path-browserify",
+    "dgram": "react-native-udp"
+  },
+  "browser": {
+    "fs": "react-native-level-fs",
+    "console": "console-browserify",
+    "path": "path-browserify",
+    "dgram": "react-native-udp"
   }
 }

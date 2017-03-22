@@ -1,8 +1,8 @@
 /**
  * Created by Julian on 10/4/16.
  */
-import {Match} from 'meteor/check';
-import {SimpleSchema} from 'meteor/aldeed:simple-schema';
+import {Match} from 'meteor-check';
+import SimpleSchema from 'simpl-schema';
 
 SimpleSchema.extendOptions({
     index: Match.Optional(Match.OneOf(Number, String, Boolean)),

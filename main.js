@@ -28,6 +28,7 @@ class App extends Component {
 
   async componentDidMount() {
     await Font.loadAsync({
+      'Rubik': require('./node_modules/@shoutem/ui/fonts/Rubik-Regular.ttf'),
       'Rubik-Regular': require('./node_modules/@shoutem/ui/fonts/Rubik-Regular.ttf'),
       'Rubik-Medium': require('./node_modules/@shoutem/ui/fonts/Rubik-Medium.ttf')
     });
