@@ -7,7 +7,15 @@ const pageSchema = [
         "accordions": [
             {
                 "title": "Stop, stay close",
-                "text": "<p>Stop as close as you can to the crash site and turn off your car. If you are able, you want to make sure that everyone is safe. Check everyone in your car and anyone else involved in the collision.</p>"
+                "text": "<p>Stop as close as you can to the crash site and turn off your car. If you are able, you want to make sure that everyone is safe. Check everyone in your car and anyone else involved in the collision.</p>",
+                "fields": [
+                    {
+                        "name": "testField",
+                        "type": "array",
+                        "label": "Test Field",
+                        "arrayText": "test"
+                    },
+                ],
             },
             {
                 "title": "Are the vehicles in a safe place?",

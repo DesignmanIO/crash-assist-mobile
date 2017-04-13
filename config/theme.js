@@ -1,7 +1,7 @@
 /**
  * Created by Julian on 2/13/17.
  */
-import {getTheme} from '@shoutem/ui';
+import { getTheme } from '@shoutem/ui';
 import colors from './colors';
 
 const theme = {
@@ -20,8 +20,18 @@ const theme = {
       flexDirection: 'column',
       justifyContent: 'space-between',
     },
+    header: {
+      fontSize: 20,
+    },
+    incidentButton: {
+      backgroundColor: colors.primaryBlue,
+      borderWidth: 0,
+      borderRadius: 0,
+      height: 45,
+      alignSelf: 'stretch',
+    }
   },
 };
 
-export {colors};
+export { colors };
 export default theme;

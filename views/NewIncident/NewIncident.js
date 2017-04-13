@@ -1,16 +1,17 @@
 /**
  * Created by Julian on 2/13/17.
  */
-import React, {Component} from 'react';
-import {View, Heading, Subtitle, ScrollView} from '@shoutem/ui';
+import React, { Component } from 'react';
+import { View, Heading, Subtitle, ScrollView } from '@shoutem/ui';
 import Swiper from 'react-native-swiper';
 import HTMLView from 'react-native-htmlview';
-import {Form, Field} from 'simple-react-form';
-import Meteor, {createContainer} from 'react-native-meteor';
+import { Form, Field } from 'simple-react-form';
+import Meteor, { createContainer } from 'react-native-meteor';
 import hoistNonReactStatic from 'hoist-non-react-statics';
+import { connect } from 'react-redux';
 
 import renderIf from '../../lib/renderIf';
-import {Incidents} from '../../schema/Incidents';
+import { Incidents } from '../../schema/Incidents';
 // import {
 //   TextInput,
 //   NumberInput,
@@ -26,13 +27,16 @@ import pageSchema from '../../page-schema';
 
 class NewIncident extends Component {
 
-  // static navigationOptions = {
-  //   // Nav options can be defined as a function of the navigation prop:
-  //   title: ({ state }) => {
-  //     console.log(state);
-  //     return `Incident #${state.params.incidentId}`
-  //   },
-  // };
+  static navigationOptions = {
+    // Nav options can be defined as a function of the navigation prop:
+    // title: ({ state }) => {
+    //   console.log(state);
+    //   return `Incident #${state.params.incidentId}`
+    // },
+    header: {
+      visible: false,
+    }
+  };
 
   constructor(props) {
     super(props);
@@ -43,7 +47,7 @@ class NewIncident extends Component {
   getSlides = () => {
     const slides = [];
     pageSchema.forEach((page) => {
-      slides.push({_id: page._id, primary: true, title: page.title, subtitle: page.subtitle});
+      slides.push({ _id: page._id, primary: true, title: page.title, subtitle: page.subtitle });
       page.accordions.forEach((step, index) => {
         slides.push({
           _id: `${page._id}-${index}`,
@@ -57,10 +61,10 @@ class NewIncident extends Component {
   };
 
   renderForm(fields) {
-    const {incidents} = this.props;
+    const { incidents } = this.props;
     // console.log('rendering form', incidents);
     return (
-      <ScrollView style={{flex: 1}}>
+      <ScrollView styleName="fill-parent">
         <Form
           useFormTag={false}
           collection={incidents}
@@ -75,14 +79,14 @@ class NewIncident extends Component {
           onSuccess={(docId) => {
             console.log(`succeeded saving ${docId}`)
           }}
-          onSubmit={(docId)=> {
+          onSubmit={(docId) => {
             console.log(`submitted ${docId}`)
           }}
-          // className="IncidentUpdateForm"
+        // className="IncidentUpdateForm"
         >
-          <View style={{flex: 1}}>
+          <View styleName="fill-parent">
             {
-              fields.map((field, index)=> {
+              fields.map((field, index) => {
                 let arrayText = field.arrayText ? field.arrayText : 'Item';
                 // console.log(field);
                 return (
@@ -108,7 +112,7 @@ class NewIncident extends Component {
     console.log('setting index', this.props.incident._id);
     this.props.incidents.update(
       this.props.incident._id,
-      {$set: {currentStep: index}},
+      { $set: { currentStep: index } },
       (err, res) => {
         console.log(err, res);
       });
@@ -127,12 +131,12 @@ class NewIncident extends Component {
           {
             this.getSlides().map((step) => {
               return (
-                <View key={step._id} style={{flex: 1}}>
+                <View key={step._id} style={{ flex: 1 }}>
                   <Heading styleName="h-center">{step.title}</Heading>
                   {
                     step.primary ?
                       <Subtitle styleName="h-center">{step.subtitle}</Subtitle> :
-                      <HTMLView value={step.subtitle}/>
+                      <HTMLView value={step.subtitle} />
                   }
                   {
                     renderIf(this.props.incident && step.fields,
@@ -151,17 +155,22 @@ class NewIncident extends Component {
   }
 }
 
-NewIncident.navigationOptions = {};
-
-export default hoistNonReactStatic(createContainer((props) => {
-  const {incidentId} = props.navigation.state.params;
-  const incidents = Meteor.collection('incidents');
-  incidents.simpleSchema = Incidents.simpleSchema;
-  const incidentSubscription = Meteor.subscribe('SingleIncident', incidentId);
-  return {
-    incidentId,
-    incidents,
-    incident: Meteor.collection('incidents').findOne({}),
-    incidentReady: incidentSubscription.ready(),
-  }
-}, NewIncident), NewIncident);
+export default hoistNonReactStatic(
+  connect(({ appState }) => {
+    return { incidentId: appState.incidentId };
+  })
+    (createContainer((props) => {
+      console.log(props);
+      // const { incidentId } = props.navigation.state.params;
+      const { incidentId } = props;
+      const incidents = Meteor.collection('incidents');
+      incidents.simpleSchema = Incidents.simpleSchema;
+      const incidentSubscription = Meteor.subscribe('SingleIncident', incidentId);
+      return {
+        incidentId,
+        incidents,
+        incident: Meteor.collection('incidents').findOne({}),
+        incidentReady: incidentSubscription.ready(),
+      }
+    }, NewIncident))
+  , NewIncident);

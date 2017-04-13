@@ -1,14 +1,37 @@
-import React, {Component} from 'react';
-import {View, Button, Modal, Image, Text, Heading} from '@shoutem/ui';
-import {Constants} from 'exponent';
-import {connectStyle} from '@shoutem/theme';
-import Meteor, {createContainer, getData} from 'react-native-meteor';
-import {AsyncStorage, Alert} from 'react-native';
+import React, { Component } from 'react';
+import { View, Button, Modal, Image, Text, Heading, TouchableOpacity } from '@shoutem/ui';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Constants } from 'exponent';
+import { connectStyle } from '@shoutem/theme';
+import Meteor, { createContainer, getData } from 'react-native-meteor';
+import { AsyncStorage, Alert } from 'react-native';
+import { NavigationActions } from 'react-navigation';
+
+import { Store } from '../../main';
+import theme from '../../config/theme';
+const menuStyle = theme['ca.component.MenuIcon'];
+console.log(menuStyle);
 // import Icon from 'react-native-vector-icons/Ionicons';
 
 // import './Landing.scss';
 
 class Home extends Component {
+
+  static navigationOptions = {
+    header(navigation, defaultHeader) {
+      // todo: left off here, need to figure this header out
+      console.log(defaultHeader);
+      return {
+        ...defaultHeader,
+        right: (
+          <TouchableOpacity onPress={() => { navigation.navigate("DrawerOpen") }}>
+            <Icon name="menu" style={menuStyle} />
+          </TouchableOpacity>
+        ),
+        visible: true,
+      };
+    },
+  }
 
   constructor(props) {
     super(props);
@@ -21,7 +44,7 @@ class Home extends Component {
     if (token) {
       console.log('should be logged in');
     } else {
-      Meteor.call('login', {deviceId: Constants.deviceId}, (error, result) => {
+      Meteor.call('login', { deviceId: Constants.deviceId }, (error, result) => {
         AsyncStorage.setItem('reactnativemeteor_usertoken', result.token);
         getData()._tokenIdSaved = result.token;
         Meteor._userIdSaved = result.id;
@@ -45,19 +68,19 @@ class Home extends Component {
   // }
 
   // startButton = ()=> {
-    // console.log(this.refs.startButton);
-    // return this.refs.startButton;
+  // console.log(this.refs.startButton);
+  // return this.refs.startButton;
   // };
 
   // toggleTooltip = (state)=> {
-    // if (state || this.state.tooltipOpen) {
-    //   this.setState({toolTipOpen: false});
-    // } else if (!state || !this.state.tooltipOpen) {
-    //   this.setState({toolTipOpen: true});
-    // }
+  // if (state || this.state.tooltipOpen) {
+  //   this.setState({toolTipOpen: false});
+  // } else if (!state || !this.state.tooltipOpen) {
+  //   this.setState({toolTipOpen: true});
+  // }
   // };
 
-  renderFirstTimeDialog = ()=> {
+  renderFirstTimeDialog = () => {
     // return (
     //     <Popover
     //         getTarget={this.startButton}
@@ -73,9 +96,9 @@ class Home extends Component {
   };
 
   // hideLoginDialog = ()=> {
-    // console.log('hid dialog, preventing from seeing in the future');
-    // Users.update(Meteor.userId(), {$set: {'profile.hideLoginDialog': true}});
-    // this.setState({showLoginDialog: false});
+  // console.log('hid dialog, preventing from seeing in the future');
+  // Users.update(Meteor.userId(), {$set: {'profile.hideLoginDialog': true}});
+  // this.setState({showLoginDialog: false});
   // };
 
   // renderLoginDialog = ()=> {
@@ -102,29 +125,43 @@ class Home extends Component {
   //   }
   // };
   goToIncident() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     let incidentId;
-    if (!Meteor.userId()){
+    if (!Meteor.userId()) {
       Alert.alert('Not logged in! Something\'s wrong...');
     }
     if (this.props.incompleteIncident) {
       incidentId = this.props.incompleteIncident._id;
     } else {
-      incidentId = Meteor.collection('incidents').insert({completed: false, userId: Meteor.userId()}, (err, res) => console.log(err,res));
+      incidentId = Meteor.collection('incidents').insert({ completed: false, userId: Meteor.userId() }, (err, res) => console.log(err, res));
     }
-    console.log(incidentId);
-    navigation.navigate('NewIncident', {incidentId});
+
+    // console.log(incidentId);
+    Store.dispatch({ type: 'SET_INCIDENTID', incidentId });
+    navigation.navigate('NewIncident', { incidentId });
+    // navigation.dispatch(
+    //   NavigationActions.navigate({
+    //     routeName: 'NewIncident',
+    //     params: { incidentId },
+    //     // action: NavigationActions.navigate({
+    //     //   routeName: 'NewIncident',
+    //     //   params: { incidentId },
+    //     // }),
+    //   }),
+    // );
   }
 
   render() {
     console.log(this.props);
-    const {style} = this.props;
+    const { style } = this.props;
     return (
-      <View style={style.wrapper}>
-        <Heading styleName="h-center">Remain Calm, We'll help you through this!</Heading>
-        <Image/>
-        <Button onPress={() => this.goToIncident()}>
-          <Text>
+      <View style={style.wrapper} styleName="vertical h-center">
+        <Heading styleName="h-center" style={style.header}>
+          Remain Calm, {'\n'}We'll help you through this!
+        </Heading>
+        <Image source={require('../../assets/crash.png')} style={{ width: 240, height: 48 }} />
+        <Button onPress={() => this.goToIncident()} style={style.incidentButton}>
+          <Text styleName="bright">
             {this.props.incompleteIncident ? "Continue Incident" : "New Incident"}
           </Text>
         </Button>
@@ -142,11 +179,11 @@ Home.propTypes = {
 export default createContainer((props) => {
   const pastIncidentsHandle = Meteor.subscribe('PastIncidents');
   // const loading = !pastIncidentsHandle.ready();
-  const pastIncidents = Meteor.collection('incidents').find({completed: true});
+  const pastIncidents = Meteor.collection('incidents').find({ completed: true });
   const hideLoginDialog = true; //Meteor.user() || {}, "profile", "hideLoginDialog") || true;
   console.log(Meteor.collection('incidents').find({}), Meteor.userId());
   return {
-    incompleteIncident: Meteor.collection('incidents').findOne({completed: false}),
+    incompleteIncident: Meteor.collection('incidents').findOne({ completed: false }),
     completeIncidents: !!pastIncidents.length,
     hideLoginDialog
   }

@@ -1,8 +1,8 @@
 {
-  "packagerPort": 19001,
-  "packagerPid": 22082,
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://2x-9xi.buishi.crash-assist-rn.exp.direct",
-  "packagerNgrokUrl": "https://packager.2x-9xi.buishi.crash-assist-rn.exp.direct",
-  "ngrokPid": 22104
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerPort": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

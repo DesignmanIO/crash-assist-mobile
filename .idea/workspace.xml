@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a15d1127-b225-4ea9-9abc-e0d2383b25b9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/page-schema.js" afterPath="$PROJECT_DIR$/page-schema.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schema/Incidents.js" afterPath="$PROJECT_DIR$/schema/Incidents.js" />
     </list>
     <ignored path="crash-assist-rn.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,12 +26,12 @@
     <favorites_list name="crash-assist-rn" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="NewIncident.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/NewIncident/NewIncident.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="139" column="60" selection-start-line="139" selection-start-column="60" selection-end-line="139" selection-end-column="60" />
+            <state relative-caret-position="480">
+              <caret line="43" column="22" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
               <folding>
                 <element signature="e#41#80#0" expanded="true" />
               </folding>
@@ -40,18 +42,18 @@
       <file leaf-file-name="page-schema.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/page-schema.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="71" column="5" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
+            <state relative-caret-position="270">
+              <caret line="18" column="14" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file leaf-file-name="Incidents.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/schema/Incidents.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+            <state relative-caret-position="60">
+              <caret line="16" column="56" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -60,7 +62,7 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
+            <state relative-caret-position="525">
               <caret line="35" column="19" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
               <folding />
             </state>
@@ -93,7 +95,6 @@
         <option value="$PROJECT_DIR$/views/PastIncidents/PastIncidents.js" />
         <option value="$PROJECT_DIR$/views/NewIncident/index.js" />
         <option value="$PROJECT_DIR$/components/MainDrawer/MainDrawer.js" />
-        <option value="$PROJECT_DIR$/page-schema.js" />
         <option value="$PROJECT_DIR$/components/Fields/TextField/index.js" />
         <option value="$PROJECT_DIR$/components/Fields/TextField/TextField.js" />
         <option value="$PROJECT_DIR$/components/Fields/index.js" />
@@ -115,7 +116,6 @@
         <option value="$PROJECT_DIR$/imports/shared/collections/Incidents.js" />
         <option value="$PROJECT_DIR$/components/FormControls/PhotoInput/PhotoInput.js" />
         <option value="$PROJECT_DIR$/main.js" />
-        <option value="$PROJECT_DIR$/schema/Incidents.js" />
         <option value="$PROJECT_DIR$/components/FormControls/index.js" />
         <option value="$PROJECT_DIR$/views/Home/Home.js" />
         <option value="$PROJECT_DIR$/components/FormControls/TelInput/TelInput.js" />
@@ -129,6 +129,8 @@
         <option value="$PROJECT_DIR$/node_modules/simple-react-form/src/Array/ArrayContextItem.js" />
         <option value="$PROJECT_DIR$/views/NewIncident/NewIncident.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/page-schema.js" />
+        <option value="$PROJECT_DIR$/schema/Incidents.js" />
       </list>
     </option>
   </component>
@@ -442,8 +444,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -454,7 +456,7 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-    <property name="SearchEverywhereHistoryKey" value="pack&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/package.json&#10;newi&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/views/NewIncident/NewIncident.js&#10;log&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/imports/ui/pages/Login/Login.jsx&#10;array&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/imports/ui/FormElements/Array.jsx&#10;inci&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/schema/Incidents.js&#10;n&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/views/NewIncident/NewIncident.js&#10;new&#9;ACTION&#9;NewGroup&#10;date&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/components/FormControls/DateInput/DateInput.js&#10;text&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/components/FormControls/TextInput/TextInput.js&#10;incidents&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/imports/shared/collections/Incidents.js&#10;hom&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/views/Home/Home.js&#10;maind&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/components/MainDrawer/MainDrawer.js&#10;newin&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/views/NewIncident/NewIncident.js&#10;schem&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/page-schema.js&#10;swipe&#9;null&#9;null&#10;fieldjs&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/node_modules/simple-react-form/lib/Field.js&#10;field&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/imports/ui/FormElements/Field.jsx&#10;main&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/main.js&#10;arrayi&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/components/FormControls/ArrayInput/ArrayInput.js&#10;index&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/components/FormControls/index.js&#10;package&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/package.json&#10;page&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/page-schema.js&#10;pagesch&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/page-schema.js&#10;incidentup&#9;null&#9;null&#10;accordions&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/imports/ui/components/Accordion/Accordions.jsx&#10;theme&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/config/theme.js" />
+    <property name="SearchEverywhereHistoryKey" value="incident&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/schema/Incidents.js&#10;pack&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/package.json&#10;newi&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/views/NewIncident/NewIncident.js&#10;log&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/imports/ui/pages/Login/Login.jsx&#10;array&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/imports/ui/FormElements/Array.jsx&#10;inci&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/schema/Incidents.js&#10;n&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/views/NewIncident/NewIncident.js&#10;new&#9;ACTION&#9;NewGroup&#10;date&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/components/FormControls/DateInput/DateInput.js&#10;text&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/components/FormControls/TextInput/TextInput.js&#10;incidents&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/imports/shared/collections/Incidents.js&#10;hom&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/views/Home/Home.js&#10;maind&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/components/MainDrawer/MainDrawer.js&#10;newin&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/views/NewIncident/NewIncident.js&#10;schem&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/page-schema.js&#10;swipe&#9;null&#9;null&#10;fieldjs&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/node_modules/simple-react-form/lib/Field.js&#10;field&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/imports/ui/FormElements/Field.jsx&#10;main&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/main.js&#10;arrayi&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/components/FormControls/ArrayInput/ArrayInput.js&#10;index&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/components/FormControls/index.js&#10;package&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/package.json&#10;page&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/page-schema.js&#10;pagesch&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/page-schema.js&#10;incidentup&#9;null&#9;null&#10;accordions&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/imports/ui/components/Accordion/Accordions.jsx&#10;theme&#9;FILE&#9;file:///Users/Julian/OneDrive/Meteor/crash-assist-rn/config/theme.js" />
     <property name="FullScreen" value="true" />
   </component>
   <component name="RecentsManager">
@@ -547,33 +549,34 @@
       <workItem from="1489155731683" duration="2223000" />
       <workItem from="1489160352880" duration="7494000" />
       <workItem from="1489187561218" duration="15000" />
-      <workItem from="1490208688008" duration="2999000" />
+      <workItem from="1490208688008" duration="3888000" />
+      <workItem from="1490270982569" duration="44000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34833000" />
+    <option name="totallyTimeSpent" value="35766000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24954791" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32959184" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32902583" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -874,13 +877,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schema/Incidents.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="51" column="71" selection-start-line="51" selection-start-column="71" selection-end-line="51" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/simple-react-form/src/types.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="326">
@@ -906,22 +902,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="116">
           <caret line="103" column="41" selection-start-line="103" selection-start-column="41" selection-end-line="103" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="35" column="19" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+        <state relative-caret-position="45">
+          <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/NewIncident/NewIncident.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="139" column="60" selection-start-line="139" selection-start-column="60" selection-end-line="139" selection-end-column="60" />
+        <state relative-caret-position="480">
+          <caret line="43" column="22" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
           <folding>
             <element signature="e#41#80#0" expanded="true" />
           </folding>
@@ -930,16 +925,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/page-schema.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="71" column="5" selection-start-line="71" selection-start-column="5" selection-end-line="71" selection-end-column="5" />
+        <state relative-caret-position="270">
+          <caret line="18" column="14" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/schema/Incidents.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+        <state relative-caret-position="60">
+          <caret line="16" column="56" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="19" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
           <folding />
         </state>
       </provider>

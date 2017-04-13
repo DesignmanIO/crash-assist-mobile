@@ -13,6 +13,8 @@ import {
 } from '../components/FormControls';
 
 const formSchema = new SimpleSchema({
+  "testField": {type: Array, srf: {type: ArrayInput}},
+  "testField.$": {type: String, srf: {type: TextInput}},
   //driver info
   "driverInfo.licensePhoto": {type: Array, srf: {type: PhotoInput}},
   "driverInfo.name": {type: String, srf: {type: TextInput}},

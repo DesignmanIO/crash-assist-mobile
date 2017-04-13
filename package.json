@@ -17,7 +17,7 @@
     "exponent": "^13.1.0",
     "hoist-non-react-statics": "^1.2.0",
     "meteor-check": "git+https://github.com/mrbigmouth/npm-meteor-check.git",
-    "moment": "^2.15.1",
+    "moment": "^2.18.1",
     "path-browserify": "0.0.0",
     "process": "^0.11.9",
     "react": "~15.4.0",
@@ -28,10 +28,12 @@
     "react-native-modal-datetime-picker": "^3.0.1",
     "react-native-swiper": "^1.5.4",
     "react-native-udp": "^1.2.9",
-    "react-navigation": "^1.0.0-beta.6",
+    "react-navigation": "github:react-community/react-navigation",
+    "react-redux": "^5.0.3",
+    "redux": "^3.6.0",
     "rn-nodeify": "^7.0.1",
     "simpl-schema": "^0.2.3",
-    "simple-react-form": "DesignmanIO/simple-react-form"
+    "simple-react-form": "github:designmanio/simple-react-form"
   },
   "react-native": {
     "fs": "react-native-level-fs",
