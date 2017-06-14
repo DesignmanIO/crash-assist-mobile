@@ -10,15 +10,31 @@ import {
   TelInput,
   EmailInput,
   ArrayInput,
+  CheckBox,
 } from '../components/FormControls';
 
 const formSchema = new SimpleSchema({
+  "completed": {type: Boolean, defaultValue() { return false; }},
+  "safety.carOff": {type: Boolean, srf: {type: CheckBox}},
+  "safety.safePlace": {type: Boolean, srf: {type: CheckBox}},
+  "safety.medicalAttention": {type: Boolean, srf: {type: CheckBox}},
+  "safety.call911": {type: Boolean, srf: {type: CheckBox}},
+  "safety.waitForPolice": {type: Boolean, srf: {type: CheckBox}},
+  //dos & donts
+  "dont.admitFault": {type: Boolean, srf: {type: CheckBox}},
+  "dont.discussAccident": {type: Boolean, srf: {type: CheckBox}},
+  "dont.diminishInjury": {type: Boolean, srf: {type: CheckBox}},
+  "dont.acceptPayment": {type: Boolean, srf: {type: CheckBox}},
+  "do.cooperate": {type: Boolean, srf: {type: CheckBox}},
+  "do.collectInformation": {type: Boolean, srf: {type: CheckBox}},
+  //testing
   "testField": {type: Array, srf: {type: ArrayInput}},
   "testField.$": {type: String, srf: {type: TextInput}},
   //driver info
-  "driverInfo.licensePhoto": {type: Array, srf: {type: PhotoInput}},
+  "driverInfo.licensePhoto": {type: Array, optional: true, srf: {type: PhotoInput}},
+  "driverInfo.licensePhoto.$": {type: String, optional: true},
   "driverInfo.name": {type: String, srf: {type: TextInput}},
-  "driverInfo.address": {type: String, srf: {type: TextInput}},
+  "driverInfo.address": {type: String, srf: {type: TextareaInput}},
   "driverInfo.phone": {type: String, srf: {type: TelInput}},
   "driverInfo.email": {type: String, srf: {type: EmailInput}},
   "driverInfo.license": {type: String, srf: {type: TextInput}},
@@ -52,6 +68,8 @@ const formSchema = new SimpleSchema({
   "trafficInfo.trafficControls": {type: String, srf: {type: TextareaInput}},
   //Witness Information
   "witnessInfo": {type: Array, optional: true, srf: {type: ArrayInput}},
+  "witnessInfo.$.infoPhoto": {type: Array, optional: true, srf: {type: PhotoInput}},
+  "witnessInfo.$.infoPhoto.$": {type: String, optional: true},
   "witnessInfo.$.name": {type: String, srf: {type: TextInput}},
   "witnessInfo.$.phone": {type: String, srf: {type: TelInput}, optional: true},
   "witnessInfo.$.email": {type: String, srf: {type: EmailInput}, optional: true},

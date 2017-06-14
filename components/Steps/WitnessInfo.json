@@ -1,0 +1,45 @@
+{
+  "_id": "sf1",
+  "title": "Gather Witness Info",
+  "subtitle": "If any witnesses saw the collision, collect their info below:",
+  "fields": [
+    {
+      "name": "witnessInfo",
+      "type": "array",
+      "label": "Witness Information",
+      "arrayText": "Witness",
+      "fields": [
+        {
+          "name": "infoPhoto",
+          "type": "photo",
+          "label": "Witness Information",
+          "arrayText": "Witness"
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "label": "Name",
+          "arrayText": "Witness"
+        },
+        {
+          "name": "phone",
+          "type": "phone",
+          "label": "Phone Number",
+          "arrayText": "Witness"
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "label": "Email address",
+          "arrayText": "Witness"
+        },
+        {
+          "name": "testimony",
+          "type": "textarea",
+          "label": "Testimony or statement",
+          "arrayText": "Witness"
+        }
+      ]
+    }
+  ]
+}

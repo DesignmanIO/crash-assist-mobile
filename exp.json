@@ -3,14 +3,14 @@
   "description": "An empty new project",
   "slug": "crash-assist-rn",
   "privacy": "public",
-  "sdkVersion": "13.0.0",
+  "sdkVersion": "15.0.0",
   "version": "1.0.0",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
   "icon": "./assets/CrashAssistIconV2HR.png",
   "loading": {
     "icon": "./assets/CrashAssistIconV2HR.png",
-    "hideExponentText": false
+    "hideExponentText": true
   },
   "packagerOpts": {
     "assetExts": ["ttf", "mp4"]

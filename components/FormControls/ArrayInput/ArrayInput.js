@@ -1,64 +1,81 @@
 /**
  * Created by Julian on 2/13/17.
  */
-import React from 'react';
-import {ArrayComponent} from 'simple-react-form';
-import {Button, Row, Subtitle, Text, View} from '@shoutem/ui';
-import Icon from 'react-native-vector-icons/Ionicons';
+import React from "react";
+import { ArrayComponent } from "simple-react-form";
+import { Button, Row, Subtitle, Text, View } from "@shoutem/ui";
+import Icon from "react-native-vector-icons/Ionicons";
+import {connectStyle} from '@shoutem/theme';
 // import TextInput from '../TextInput';
 
 class ArrayInput extends ArrayComponent {
   static propTypes = {
-    passProps: React.PropTypes.object,
+    passProps: React.PropTypes.object
   };
 
   constructor(props) {
     super(props);
   }
 
-  renderChildrenItem({index, children}) {
-    console.log(index, children, this.context.parentFieldName);
+  componentWillMount() {
+    this.addItem();
+  }
+
+  getChildrenComponents (item, index) {
+    if (this.props.passProps.renderItem) return this.props.passProps.renderItem(item, index)
+    if (this.props.passProps.children) return this.props.passProps.children
+  }
+
+  renderChildrenItem({ index, children }) {
+    // console.log(index, children, this.context.parentFieldName);
     return (
-      <Row key={`${this.props.fieldName}.${index}`}>
+      <View key={`${this.props.fieldName}.${index}`}>
         <View styleName="vertical">
-          <Subtitle>{`${this.props.passProps.arrayText} ${index + 1}`}</Subtitle>
-          {this.renderChildrenItemWithContext({index, children})}
+          <View styleName="horizontal space-between" style={{marginBottom: 20}}>
+            <Subtitle>
+              {`${this.props.passProps.arrayText} ${index + 1}`}
+            </Subtitle>
+            {this.renderRemoveButton(index)}
+          </View>
+          {this.renderChildrenItemWithContext({ index, children })}
         </View>
-        <View>
-          {this.renderRemoveButton(index)}
-        </View>
-      </Row>
-    )
+      </View>
+    );
   }
 
   renderRemoveButton(index) {
     if (this.props.disabled) return null;
     return (
       <Button onPress={() => this.removeItem(index)}>
-        <Icon name="ios-trash"/>
+        <Icon name="ios-trash" />
       </Button>
-    )
+    );
   }
 
   renderAddButton() {
+    const {style} = this.props;
     if (!this.props.showAddButton) return;
     if (this.props.disabled) return;
     return (
-      <Button onPress={() => this.addItem()}>
-        <Icon name="ios-add"/>
-        <Text>{this.props.passProps.arrayText ? `Add ${this.props.passProps.arrayText}` : ''}</Text>
+      <Button onPress={() => this.addItem()} style={style.addButton} styleName="full-width">
+        <Icon name="ios-add" style={style.addButtonIcon} />
+        <Text styleName="bright" style={style.addButtonText}>
+          {this.props.passProps.arrayText
+            ? `  Add ${this.props.passProps.arrayText}`
+            : ""}
+        </Text>
       </Button>
-    )
+    );
   }
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1, paddingBottom: 120 }}>
         {this.renderChildren()}
         {this.renderAddButton()}
       </View>
-    )
+    );
   }
 }
 
-export default ArrayInput;
+export default connectStyle('ca.component.ArrayInput')(ArrayInput);

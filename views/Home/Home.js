@@ -1,27 +1,37 @@
-import React, { Component } from 'react';
-import { View, Button, Modal, Image, Text, Heading, TouchableOpacity } from '@shoutem/ui';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Constants } from 'exponent';
-import { connectStyle } from '@shoutem/theme';
-import Meteor, { createContainer, getData } from 'react-native-meteor';
-import { AsyncStorage, Alert } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import React, { Component } from "react";
+import {
+  View,
+  Button,
+  Modal,
+  Image,
+  Text,
+  Heading,
+  TouchableOpacity,
+  Lightbox,
+  ScrollView
+} from "@shoutem/ui";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { Constants } from "expo";
+import { connectStyle } from "@shoutem/theme";
+import Meteor, { createContainer, getData } from "react-native-meteor";
+import { AsyncStorage, Alert } from "react-native";
+import { NavigationActions } from "react-navigation";
 
-import { Store } from '../../main';
-import theme from '../../config/theme';
-const menuStyle = theme['ca.component.MenuIcon'];
-console.log(menuStyle);
+import { Store } from "../../main";
+import theme from "../../config/theme";
+const menuStyle = theme["ca.component.MenuIcon"];
+import Disclaimer from "../../components/Disclaimer";
+// console.log(menuStyle);
 // import Icon from 'react-native-vector-icons/Ionicons';
 
 // import './Landing.scss';
 
 class Home extends Component {
-
-  static navigationOptions = {
-    header(navigation, defaultHeader) {
-      // todo: left off here, need to figure this header out
-      console.log(defaultHeader);
-      return {
+  // static navigationOptions = {
+  // header(navigation, defaultHeader) {
+  // todo: left off here, need to figure this header out
+  // console.log(defaultHeader);
+  /*return {
         ...defaultHeader,
         right: (
           <TouchableOpacity onPress={() => { navigation.navigate("DrawerOpen") }}>
@@ -29,9 +39,9 @@ class Home extends Component {
           </TouchableOpacity>
         ),
         visible: true,
-      };
-    },
-  }
+      };*/
+  // },
+  // }
 
   constructor(props) {
     super(props);
@@ -40,15 +50,21 @@ class Home extends Component {
 
   async componentWillMount() {
     // console.log(Constants.deviceId, Constants);
-    const token = await AsyncStorage.getItem('reactnativemeteor_usertoken');
+    const token = await AsyncStorage.getItem("reactnativemeteor_usertoken");
+    console.log(token);
     if (token) {
-      console.log('should be logged in');
+      console.log("should be logged in");
     } else {
-      Meteor.call('login', { deviceId: Constants.deviceId }, (error, result) => {
-        AsyncStorage.setItem('reactnativemeteor_usertoken', result.token);
-        getData()._tokenIdSaved = result.token;
-        Meteor._userIdSaved = result.id;
-      })
+      Meteor.call(
+        "login",
+        { deviceId: Constants.deviceId },
+        (error, result) => {
+          AsyncStorage.setItem("reactnativemeteor_usertoken", result.token);
+          getData()._tokenIdSaved = result.token;
+          Meteor._userIdSaved = result.id;
+          console.log('logged in first time', error, result);
+        }
+      );
     }
   }
 
@@ -128,17 +144,20 @@ class Home extends Component {
     const { navigation } = this.props;
     let incidentId;
     if (!Meteor.userId()) {
-      Alert.alert('Not logged in! Something\'s wrong...');
+      Alert.alert("Not logged in! Something's wrong...");
     }
     if (this.props.incompleteIncident) {
       incidentId = this.props.incompleteIncident._id;
     } else {
-      incidentId = Meteor.collection('incidents').insert({ completed: false, userId: Meteor.userId() }, (err, res) => console.log(err, res));
+      incidentId = Meteor.collection("incidents").insert(
+        { completed: false, userId: Meteor.userId() },
+        (err, res) => console.log(err, res)
+      );
     }
 
     // console.log(incidentId);
-    Store.dispatch({ type: 'SET_INCIDENTID', incidentId });
-    navigation.navigate('NewIncident', { incidentId });
+    Store.dispatch({ type: "SET_INCIDENTID", incidentId });
+    navigation.navigate("Incident", { incidentId });
     // navigation.dispatch(
     //   NavigationActions.navigate({
     //     routeName: 'NewIncident',
@@ -152,19 +171,59 @@ class Home extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { style } = this.props;
+    // console.log(this.props.user);
     return (
       <View style={style.wrapper} styleName="vertical h-center">
         <Heading styleName="h-center" style={style.header}>
-          Remain Calm, {'\n'}We'll help you through this!
+          Remain Calm, {"\n"}We'll help you through this!
         </Heading>
-        <Image source={require('../../assets/crash.png')} style={{ width: 240, height: 48 }} />
-        <Button onPress={() => this.goToIncident()} style={style.incidentButton}>
-          <Text styleName="bright">
-            {this.props.incompleteIncident ? "Continue Incident" : "New Incident"}
-          </Text>
-        </Button>
+        <Image
+          source={require("../../assets/crash.png")}
+          style={{ width: 240, height: 48 }}
+        />
+        <Lightbox
+          backgroundColor="white"
+          style={{ alignSelf: "stretch" }}
+          swipeToDismiss={false}
+          pinchToZoom={false}
+          renderHeader={close => {
+            this.confirmDisclaimer = close;
+            return null;
+          }}
+          renderContent={() => {
+            return (
+              <View styleName="fill-parent">
+                <Disclaimer />
+                <Button
+                  onPress={() => {
+                    this.confirmDisclaimer();
+                    //setTimeout(() => {
+                    this.goToIncident();
+                    //}, 300);
+                  }}
+                  style={style.incidentButton}
+                >
+                  <Text styleName="bright">
+                    Agree
+                  </Text>
+                </Button>
+              </View>
+            );
+          }}
+        >
+
+          <View
+            style={style.incidentButton}
+            styleName="vertical h-center v-center"
+          >
+            <Text styleName="bright">
+              {this.props.incompleteIncident
+                ? "Continue Incident"
+                : "New Incident"}
+            </Text>
+          </View>
+        </Lightbox>
       </View>
     );
   }
@@ -173,18 +232,23 @@ class Home extends Component {
 Home.propTypes = {
   style: React.PropTypes.object,
   incompleteIncident: React.PropTypes.object,
-  completeIncidents: React.PropTypes.bool,
+  completeIncidents: React.PropTypes.bool
 };
 
-export default createContainer((props) => {
-  const pastIncidentsHandle = Meteor.subscribe('PastIncidents');
+export default createContainer(props => {
+  const pastIncidentsHandle = Meteor.subscribe("PastIncidents");
   // const loading = !pastIncidentsHandle.ready();
-  const pastIncidents = Meteor.collection('incidents').find({ completed: true });
+  const pastIncidents = Meteor.collection("incidents").find({
+    completed: true
+  });
   const hideLoginDialog = true; //Meteor.user() || {}, "profile", "hideLoginDialog") || true;
-  console.log(Meteor.collection('incidents').find({}), Meteor.userId());
+  // console.log(Meteor.collection('incidents').find({}), Meteor.userId());
   return {
-    incompleteIncident: Meteor.collection('incidents').findOne({ completed: false }),
+    user: Meteor.user(),
+    incompleteIncident: Meteor.collection("incidents").findOne({
+      completed: false
+    }),
     completeIncidents: !!pastIncidents.length,
     hideLoginDialog
-  }
-}, connectStyle('ca.view.Home', {})(Home));
+  };
+}, connectStyle("ca.view.Home", {})(Home));

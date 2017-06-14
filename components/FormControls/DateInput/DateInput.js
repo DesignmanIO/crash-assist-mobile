@@ -58,7 +58,6 @@ class DateInput extends Component {
           onChange={this.onChange.bind(this)}
           onKeyDown={this.onKeyDown.bind(this)}
           onBlur={() => this.props.onChange(this.state.value)}
-          {...this.passProps}
         />
       </View>
     )

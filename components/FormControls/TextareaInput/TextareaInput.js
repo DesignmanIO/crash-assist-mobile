@@ -1,23 +1,29 @@
 /**
  * Created by Julian on 2/13/17.
  */
-import React, {PropTypes} from 'react';
-import TextInput from '../TextInput';
-import hoistNonReactStatic from 'hoist-non-react-statics';
+import React, { PropTypes, Component } from "react";
+import TextInput from "../TextInput";
+import hoistNonReactStatic from "hoist-non-react-statics";
 
-class TextareaInput extends TextInput {
-  static propTypes = {
-    changeOnKeyDown: React.PropTypes.bool,
-    fieldType: React.PropTypes.string,
-    keyboardType: PropTypes.string,
-  }
-  static defaultProps = {
-    keyboardType: 'phone-pad',
-    changeOnKeyDown: true,
-  };
-
+class TextareaInput extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      height: 55
+    };
+  }
+  render() {
+    const { height } = this.state;
+    return (
+      <TextInput
+        height={height}
+        multiline={true}
+        onContentSizeChange={event => {
+          this.setState({ height: event.nativeEvent.contentSize.height });
+        }}
+      />
+    );
   }
 }
 

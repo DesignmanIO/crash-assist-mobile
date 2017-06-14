@@ -9,6 +9,8 @@ import PhotoInput from './PhotoInput';
 import TelInput from './TelInput';
 import EmailInput from './EmailInput';
 import ArrayInput from './ArrayInput';
+import Form from './Form';
+import CheckBox from './CheckBox';
 
 export {
   TextInput,
@@ -19,4 +21,6 @@ export {
   TelInput,
   EmailInput,
   ArrayInput,
+  Form,
+  CheckBox,
 };
