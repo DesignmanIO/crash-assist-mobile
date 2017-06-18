@@ -17,10 +17,12 @@ class TextareaInput extends Component {
     const { height } = this.state;
     return (
       <TextInput
+        {...this.props}
+        passProps={this.props.passProps}
         height={height}
         multiline={true}
-        onContentSizeChange={event => {
-          this.setState({ height: event.nativeEvent.contentSize.height });
+        onContentSizeChange={size => {
+          this.setState({ height: size.height });
         }}
       />
     );

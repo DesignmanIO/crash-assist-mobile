@@ -28,16 +28,19 @@ class Form extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      incident: this.props.doc,
+    };
 
     this.formHeight = new Animated.Value(0);
     this.keyboardWillShow = this.keyboardWillShow.bind(this);
     this.keyboardWillHide = this.keyboardWillHide.bind(this);
     // this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSubmit = _.throttle(this.handleSubmit, 1000, {
-      leading: false,
-      trailing: true
-    });
+    // this.handleSubmit = _.throttle(this.handleSubmit, 1000, {
+    //   leading: false,
+    //   trailing: true
+    // });
+    this.fields = {};
   }
 
   componentWillMount() {
@@ -74,15 +77,30 @@ class Form extends Component {
     ]).start();
   }
 
-  handleSubmit(changes) {
-    // console.log("4: submitting", changes);
-    const { collection, doc } = this.props;
-    const mongoReadyChanges = flatten({ ...changes });
-    // console.log(doc, mongoReadyChanges);
-    this.formRef.submit();
-    // collection.update(doc._id, { $set: mongoReadyChanges }, (err, res) => {
-    //   console.log("updated", err, res);
-    // });
+  getFieldType(type) {
+    switch (type) {
+      case "checkbox": {
+        return CheckBox;
+      }
+      case "array": {
+        return ArrayInput;
+      }
+      case "photo": {
+        return PhotoInput;
+      }
+      case "textarea": {
+        return TextareaInput;
+      }
+      case "phone": {
+        return TelInput;
+      }
+      case "email": {
+        return EmailInput;
+      }
+      default: {
+        return TextInput;
+      }
+    }
   }
 
   render() {
@@ -111,9 +129,9 @@ class Form extends Component {
                 keepArrays={false}
                 ref={form => this.formRef = form}
                 formId={formId}
-                state={this.state}
-                onChange={changes => {
-                  //console.log("3: passing to submit", changes);
+                state={this.state.incident}
+                onChange={(newState, changes) => {
+                  {/*console.log("3: passing to submit", changes);*/}
                   updateIncident(changes);
                   //this.handleSubmit(changes);
                   // this.setState(changes);
@@ -135,36 +153,13 @@ class Form extends Component {
                         </Heading>
                       );
                     }
-                    const getFieldType = type => {
-                      switch (type) {
-                        case "checkbox": {
-                          return CheckBox;
-                        }
-                        case "array": {
-                          return ArrayInput;
-                        }
-                        case "photo": {
-                          return PhotoInput;
-                        }
-                        case "textarea": {
-                          return TextareaInput;
-                        }
-                        case "phone": {
-                          return TelInput;
-                        }
-                        case "email": {
-                          return EmailInput;
-                        }
-                        default: {
-                          return TextInput;
-                        }
-                      }
-                    };
+
                     if (field.type === "array") {
                       //console.log("array field", field.name, field.fields);
                       return (
                         <Field
                           form={this.formRef}
+                          fieldRef={(field) => console.log(field)}
                           type={ArrayInput}
                           fieldName={field.name}
                           key={`field-${field.name}`}
@@ -173,17 +168,24 @@ class Form extends Component {
                           arrayText={arrayText}
                         >
                           <View>
-                            {field.fields.map(subField => {
-                              //console.log(subField);
+                            {field.fields.map((subField, subIndex) => {
                               return (
                                 <Field
                                   form={this.formRef}
-                                  type={getFieldType(subField.type)}
+                                  fieldRef={(field, fieldName) => this.fields[fieldName] = field}
+                                  getNextField={(fieldName) => {
+                                    const nextFieldName = _.get(field, `fields[${subIndex + 1}].name`);
+                                    if (nextFieldName){
+                                      return this.fields[fieldName.replace(/([^.]+)$/, nextFieldName)];
+                                    }
+                                  }}
+                                  type={this.getFieldType(subField.type)}
                                   fieldName={subField.name}
                                   key={`field-${subField.name}`}
                                   label={subField.label}
                                   placeHolder={subField.label}
                                   arrayText={arrayText}
+                                  returnKeyType={field.fields.length === subIndex ? 'done' : 'next'}
                                 />
                               );
                             })}
@@ -194,12 +196,21 @@ class Form extends Component {
                     return (
                       <Field
                         form={this.formRef}
-                        type={getFieldType(field.type)}
+                        type={this.getFieldType(field.type)}
+                        fieldRef={(field, fieldName) => this.fields[fieldName] = field}
+                        getNextField={() => {
+                          const nextFieldName = _.get(fields, `[${index + 1}].name`);
+                            console.log(fields, nextFieldName, index + 1)
+                          if (nextFieldName){
+                            return this.fields[nextFieldName];
+                          }
+                        }}
                         fieldName={field.name}
                         key={`field-${field.name}`}
                         label={field.label}
                         placeHolder={field.label}
                         arrayText={arrayText}
+                        returnKeyType={fields.length === index ? 'done' : 'next'}
                       />
                     );
                   })}

@@ -8,7 +8,7 @@ import hoistNonReactStatic from "hoist-non-react-statics";
 
 class TelInput extends Component {
   render() {
-    return <TextInput {...this.props} keyboardType="phone-pad" />;
+    return <TextInput {...this.props} keyboardType="numeric" />;
   }
 }
 

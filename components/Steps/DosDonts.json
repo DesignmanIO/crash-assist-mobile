@@ -40,20 +40,6 @@
       "name": "do.collectInformation",
       "type": "checkbox",
       "label": "Collect information at the accident scene (that’s next)."
-    },
-    {
-      "type": "divider",
-      "label": "Do"
-    },
-    {
-      "name": "do.cooperateasd",
-      "type": "checkbox",
-      "label": "Cooperate with the police."
-    },
-    {
-      "name": "do.collectInformationasd",
-      "type": "checkbox",
-      "label": "Collect information at the accident scene (that’s next)."
     }
   ]
 }

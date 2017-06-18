@@ -18,7 +18,7 @@ class ArrayInput extends ArrayComponent {
   }
 
   componentWillMount() {
-    this.addItem();
+    // this.addItem();
   }
 
   getChildrenComponents (item, index) {

@@ -27,7 +27,7 @@ class TextInput extends Component {
     super(props);
 
     this.state = {
-      value: this.props.value
+      value: this.props.value,
     };
     this.onChange = _.throttle(this.onChange, 500, { trailing: true });
   }
@@ -46,14 +46,18 @@ class TextInput extends Component {
   }
 
   render() {
-    const { style, height, value, multiline, keyboardType } = this.props;
-    // console.log('fieldProps', this.props);
+    const { style, height, value, multiline, keyboardType, passProps, fieldName } = this.props;
     return (
       <ShoutemInput
-        ref="input"
+        inputRef={(input) => passProps.fieldRef(input, fieldName)}
         value={value}
         placeholder={this.props.label}
         disabled={this.props.disabled}
+        onContentSizeChange={(event) => {
+          if (this.props.onContentSizeChange){
+            this.props.onContentSizeChange(event.nativeEvent.contentSize);
+          }
+        }}
         onChangeText={text => {
           {/*console.log("1: keyup", text);*/}
           //this.setState({ value: text });
@@ -62,9 +66,17 @@ class TextInput extends Component {
         onEndEditing={() => {
           //this.onChange();
         }}
-        style={style.input}
+        onSubmitEditing={() => {
+          const nextField = _.invoke(passProps, 'getNextField', fieldName);
+          console.log(nextField);
+          if (nextField) {
+            nextField.focus();
+          }
+        }}
+        style={{...style.input, height}}
         keyboardType={keyboardType}
         multiline={multiline || false}
+        returnKeyType={passProps.returnKeyType}
       />
     );
   }

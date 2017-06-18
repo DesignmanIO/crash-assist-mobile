@@ -24,7 +24,7 @@ class CheckBox extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // this.setState({ checked: nextProps.value });
+    this.setState({ checked: nextProps.value });
   }
 
   onChange(checked) {

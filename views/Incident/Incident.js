@@ -93,7 +93,7 @@ class Incident extends Component {
 
   updateIncident(params) {
     const incident = { ...this.state.incident, ...params };
-    console.log("update");
+    // console.log("update", params);
     this.setState({ incident, stagedChanges: params, loading: true }, () => {
       this.saveIncident();
     });
@@ -231,6 +231,7 @@ class Incident extends Component {
             <Form
               key={`step-${step._id}`}
               step={step}
+              doc={this.props.incident}
               updateIncident={params => this.updateIncident(params)}
             />
           ))}
