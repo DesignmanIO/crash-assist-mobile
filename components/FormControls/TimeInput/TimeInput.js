@@ -7,7 +7,7 @@ import TextInput from "../TextInput";
 import DatePicker from "react-native-modal-datetime-picker";
 import moment from "moment";
 
-class DateInput extends Component {
+class TimeInput extends Component {
   static propTypes = {
     value: PropTypes.any,
     onChange: PropTypes.func,
@@ -31,19 +31,30 @@ class DateInput extends Component {
     }
   }
 
+  onChange(event) {
+    this.setState({ value: event.target.value });
+    if (this.props.changeOnKeyDown) {
+      console.log("changed");
+      this.props.onChange(event.target.value);
+    }
+  }
+
   render() {
     return (
       <View>
         <DatePicker
+          mode="time"
           isVisible={this.state.showPicker}
-          mode="date"
           onConfirm={date => {
-            this.setState({
-              value: moment(date).format("ddd, M/D/YYYY"),
-              showPicker: false,
-            }, () => {
-              this.props.onChange(this.state.value);
-            });
+            this.setState(
+              {
+                value: moment(date).format("hh:mm:A"),
+                showPicker: false
+              },
+              () => {
+                this.props.onChange(this.state.value);
+              }
+            );
           }}
           onCancel={() => this.setState({ showPicker: false })}
         />
@@ -62,4 +73,4 @@ class DateInput extends Component {
   }
 }
 
-export default DateInput;
+export default TimeInput;

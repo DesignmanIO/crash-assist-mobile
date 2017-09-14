@@ -1,0 +1,37 @@
+{
+  "_id": "ns1",
+  "title": "Next Steps",
+  "subtitle": "These steps are just as important, but can be completed at your leisure.",
+  "fields": [
+    {
+      "name": "symptoms",
+      "type": "textarea",
+      "label": "Log symptoms during or after the crash."
+    },
+    {
+      "name": "checklist.operatorsReport",
+      "type": "checkbox",
+      "label": "Fill out an operator's report."
+    },
+    {
+      "name": "checklist.notifyInsurance",
+      "type": "checkbox",
+      "label": "Notify your insurance company of the accident. Email them your completed Crash Assist report."
+    },
+    {
+      "name": "checklist.seekMedicalAttention",
+      "type": "checkbox",
+      "label": "Seek medical attention. Even if you think you're not injured, get checked out as injuries may not be obvious."
+    },
+    {
+      "name": "checklist.consultAttorney",
+      "type": "checkbox",
+      "label": "Consult with an attorney, even if you think you don't need one. An attorney will advocate on your behalf with the insurance companies."
+    },
+    {
+      "name": "checklist.getWhiplashInfo",
+      "type": "checkbox",
+      "label": "Inform yourself about whiplash injuries."
+    }
+  ]
+}

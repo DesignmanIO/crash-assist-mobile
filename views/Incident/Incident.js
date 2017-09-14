@@ -22,15 +22,18 @@ import _ from "lodash";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { connectStyle } from "@shoutem/theme";
 import { flatten } from "flat";
+import { Alert } from "react-native";
 
 import renderIf from "../../lib/renderIf";
 import { Incidents } from "../../schema/Incidents";
 import { colors } from "../../config/theme";
-import Step, {
+import {
   safetyFirst,
   dosDonts,
   witnessInfo,
-  driverInfo
+  driverInfo,
+  sceneInfo,
+  nextSteps
 } from "../../components/Steps";
 import { Form } from "../../components/FormControls";
 // import {
@@ -65,7 +68,9 @@ class Incident extends Component {
       stagedChanges: {}
     };
 
-    this.saveIncident = _.debounce(this.saveIncident, 1000, {trailing: true}).bind(this);
+    this.saveIncident = _.debounce(this.saveIncident, 1000, {
+      trailing: true
+    }).bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -75,13 +80,13 @@ class Incident extends Component {
         this.setState({ incident: nextProps.incident });
       }
     } else if (nextProps.incident !== this.state.incident) {
-      console.log("Incident updated, setting state");
+      // console.log("Incident updated, setting state");
       this.setState({ incident: nextProps.incident });
     }
   }
 
   setIndex(index) {
-    console.log("setting index", this.props.incident._id);
+    // console.log("setting index", this.props.incident._id);
     this.props.incidents.update(
       this.props.incident._id,
       { $set: { currentStep: index } },
@@ -91,17 +96,25 @@ class Incident extends Component {
     );
   }
 
-  updateIncident(params) {
-    const incident = { ...this.state.incident, ...params };
-    // console.log("update", params);
-    this.setState({ incident, stagedChanges: params, loading: true }, () => {
-      this.saveIncident();
-    });
+  updateIncident(changesToStage) {
+    const incident = { ...this.state.incident, ...changesToStage };
+    console.log("update", _.merge(this.state.stagedChanges, changesToStage) );
+    this.setState(
+      {
+        incident,
+        // aggregate staged changes with previous staged changes
+        stagedChanges: _.merge(this.state.stagedChanges, changesToStage),
+        loading: true
+      },
+      () => {
+        this.saveIncident();
+      }
+    );
   }
 
   saveIncident() {
     const { incident } = this.props;
-    const mongoReadyChanges = flatten(this.state.stagedChanges);
+    const mongoReadyChanges = flatten(this.state.stagedChanges, { safe: true });
     console.log("save", this.state.stagedChanges, mongoReadyChanges);
     // const toBeUpdated = _.omit(incident, this.state.incident)
     this.props.incidents.update(
@@ -110,7 +123,7 @@ class Incident extends Component {
         $set: mongoReadyChanges
       },
       (err, res) => {
-        console.log('saved', err, res);
+        console.log("saved", err, res);
         this.setState({ stagedChanges: {}, loading: false });
       }
     );
@@ -118,7 +131,14 @@ class Incident extends Component {
 
   render() {
     // console.log(this.props.navigation);
-    const formParts = [safetyFirst, dosDonts, witnessInfo, driverInfo];
+    const formParts = [
+      safetyFirst,
+      dosDonts,
+      witnessInfo,
+      driverInfo,
+      sceneInfo,
+      nextSteps
+    ];
     return (
       <View>
         {renderIf(this.state.loading, () => (
@@ -126,6 +146,7 @@ class Incident extends Component {
         ))}
         <Swiper
           loop={false}
+          scrollEnabled={false}
           onResponderRelease={(e, state, context) => this.setIndex(state.index)}
           index={this.props.incident ? this.props.incident.currentStep || 0 : 0}
           renderPagination={(index, total, context) => {
@@ -205,22 +226,64 @@ class Incident extends Component {
                     <Icon name="chevron-left" />
                     <Text>Back</Text>
                   </Button>
-                  <Button
-                    styleName="full-width"
-                    onPress={() => {
-                      if (context.state.index + 1 < context.state.total) {
-                        context.scrollBy(1);
-                        this.setIndex(context.state.index + 1);
-                      }
-                    }}
-                    style={{
-                      marginTop: 5,
-                      marginBottom: 12
-                    }}
-                  >
-                    <Text>Next</Text>
-                    <Icon name="chevron-right" />
-                  </Button>
+                  {renderIf(
+                    context.state.index + 1 !== context.state.total,
+                    () => (
+                      <Button
+                        styleName="full-width"
+                        onPress={() => {
+                          context.scrollBy(1);
+                          this.setIndex(context.state.index + 1);
+                        }}
+                        style={{
+                          marginTop: 5,
+                          marginBottom: 12
+                        }}
+                      >
+                        <Text>Next</Text>
+                        <Icon name="chevron-right" />
+                      </Button>
+                    ),
+                    () => (
+                      <Button
+                        styleName="full-width"
+                        onPress={async () => {
+                          const finished = await new Promise(resolve => {
+                            Alert.alert(
+                              "Finalize?",
+                              "You can always come back and edit this later",
+                              [
+                                {
+                                  text: "Proceed",
+                                  type: "default",
+                                  onPress: () => resolve(true)
+                                },
+                                {
+                                  text: "Cancel",
+                                  type: "cancel",
+                                  onPress: () => resolve(false)
+                                }
+                              ]
+                            );
+                          });
+                          if (finished) {
+                            this.props.navigation.navigate("IncidentComplete");
+                            {
+                              /*context.scrollBy(1);
+                            this.setIndex(0);*/
+                            }
+                          }
+                        }}
+                        style={{
+                          marginTop: 5,
+                          marginBottom: 12
+                        }}
+                      >
+                        <Text>Done</Text>
+                        <Icon name="check" />
+                      </Button>
+                    )
+                  )}
                 </View>
               </View>
             );
@@ -232,9 +295,14 @@ class Incident extends Component {
               key={`step-${step._id}`}
               step={step}
               doc={this.props.incident}
-              updateIncident={params => this.updateIncident(params)}
+              updateDoc={params => this.updateIncident(params)}
             />
           ))}
+          {/*<View styleName="fill-parent" key="finished">
+            <Icon name="thumb-up"/>
+            <Heading>All Done!</Heading>
+            <Subtitle>Great job, we knew you could do it!</Subtitle>
+          </View>*/}
         </Swiper>
       </View>
     );

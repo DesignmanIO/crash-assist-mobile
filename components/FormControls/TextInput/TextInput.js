@@ -29,17 +29,19 @@ class TextInput extends Component {
     this.state = {
       value: this.props.value,
     };
-    this.onChange = _.throttle(this.onChange, 500, { trailing: true });
+    // console.log(this.props.onChange);
+    // this.onChange = _.throttle(this.props.onChange, 500, { trailing: true });
   }
 
   // componentWillReceiveProps(nextProps) {
   // this.setState({value: nextProps.value});
   // }
 
-  onChange() {
+  onChange(text) {
     console.log("2: passing to prop", this.state.value);
-    this.props.onChange(this.state.value);
-    //this.props.onChange(text);
+    this.setState({value: text});
+    _.throttle(() => this.props.onChange(this.state.value), 500, {trailing: true});
+    // this.props.onChange(text);
     // if (this.props.changeOnKeyDown) {
     //   this.props.onChange(event.target.value);
     // }
@@ -49,7 +51,8 @@ class TextInput extends Component {
     const { style, height, value, multiline, keyboardType, passProps, fieldName } = this.props;
     return (
       <ShoutemInput
-        inputRef={(input) => passProps.fieldRef(input, fieldName)}
+        {...this.props}
+        inputRef={(input) => _.invoke(passProps, 'fieldRef', [input, fieldName])}
         value={value}
         placeholder={this.props.label}
         disabled={this.props.disabled}
@@ -59,16 +62,12 @@ class TextInput extends Component {
           }
         }}
         onChangeText={text => {
-          {/*console.log("1: keyup", text);*/}
-          //this.setState({ value: text });
-          this.props.onChange(text);
-        }}
-        onEndEditing={() => {
-          //this.onChange();
+          this.setState({value: text});
+          this.onChange(text);
         }}
         onSubmitEditing={() => {
           const nextField = _.invoke(passProps, 'getNextField', fieldName);
-          console.log(nextField);
+          //console.log(nextField);
           if (nextField) {
             nextField.focus();
           }
@@ -76,7 +75,7 @@ class TextInput extends Component {
         style={{...style.input, height}}
         keyboardType={keyboardType}
         multiline={multiline || false}
-        returnKeyType={passProps.returnKeyType}
+        returnKeyType={_.get(passProps, 'returnKeyType', 'none')}
       />
     );
   }

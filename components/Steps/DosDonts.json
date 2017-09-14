@@ -1,5 +1,5 @@
 {
-  "_id": "sf1",
+  "_id": "dd1",
   "title": "Do's and Don'ts",
   "subtitle": "If nothing else, follow these 6 guidelines.",
   "fields": [
@@ -8,22 +8,22 @@
       "label": "Don't"
     },
     {
-      "name": "dont.admitFault",
+      "name": "checklist.admitFault",
       "type": "checkbox",
       "label": "Don’t admit fault, even if you think it is."
     },
     {
-      "name": "dont.discussAccident",
+      "name": "checklist.discussAccident",
       "type": "checkbox",
       "label": "Turn off your car and stay close to the accident site."
     },
     {
-      "name": "dont.diminishInjury",
+      "name": "checklist.diminishInjury",
       "type": "checkbox",
       "label": "Don’t say that you’re uninjured, it may take time for symptoms to appear."
     },
     {
-      "name": "dont.acceptPayment",
+      "name": "checklist.acceptPayment",
       "type": "checkbox",
       "label": "Don’t accept payment, it’s too risky."
     },
@@ -32,12 +32,12 @@
       "label": "Do"
     },
     {
-      "name": "do.cooperate",
+      "name": "checklist.cooperate",
       "type": "checkbox",
       "label": "Cooperate with the police."
     },
     {
-      "name": "do.collectInformation",
+      "name": "checklist.collectInformation",
       "type": "checkbox",
       "label": "Collect information at the accident scene (that’s next)."
     }

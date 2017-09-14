@@ -20,7 +20,9 @@ import {
   PhotoInput,
   TelInput,
   TextareaInput,
-  TextInput
+  TextInput,
+  TimeInput,
+  PasswordInput,
 } from "../";
 import renderIf from "../../../lib/renderIf";
 
@@ -29,10 +31,10 @@ class Form extends Component {
     super(props);
 
     this.state = {
-      incident: this.props.doc,
+      doc: this.props.doc
     };
 
-    this.formHeight = new Animated.Value(0);
+    this.formHeight = new Animated.Value(20);
     this.keyboardWillShow = this.keyboardWillShow.bind(this);
     this.keyboardWillHide = this.keyboardWillHide.bind(this);
     // this.handleSubmit = this.handleSubmit.bind(this);
@@ -72,7 +74,7 @@ class Form extends Component {
     Animated.parallel([
       Animated.timing(this.formHeight, {
         duration: event.duration,
-        toValue: 0
+        toValue: 20
       })
     ]).start();
   }
@@ -97,6 +99,15 @@ class Form extends Component {
       case "email": {
         return EmailInput;
       }
+      case "date": {
+        return DateInput;
+      }
+      case "time": {
+        return TimeInput;
+      }
+      case "password": {
+        return PasswordInput;
+      }
       default: {
         return TextInput;
       }
@@ -104,22 +115,23 @@ class Form extends Component {
   }
 
   render() {
-    const { collection, doc, formId, updateIncident, step } = this.props;
+    const { collection, doc, formId, updateDoc, step } = this.props;
     const { fields, title, subtitle, _id } = step;
     return (
       <View
         style={{
           flex: 1,
           paddingVertical: 20,
-          paddingHorizontal: 30,
-          paddingBottom: 100
+          paddingHorizontal: 20,
+          paddingBottom: 100,
+          justifyContent: "space-around"
         }}
       >
         <Heading styleName="h-center" style={{ marginBottom: 10 }}>
           {title}
         </Heading>
         <HTMLView value={subtitle} />
-        <ScrollView styleName="fill-parent" style={{ marginTop: 20 }}>
+        <ScrollView styleName="sm-gutter-top">
           {renderIf(
             true,
             () => (
@@ -129,10 +141,10 @@ class Form extends Component {
                 keepArrays={false}
                 ref={form => this.formRef = form}
                 formId={formId}
-                state={this.state.incident}
+                state={this.state.doc}
                 onChange={(newState, changes) => {
-                  {/*console.log("3: passing to submit", changes);*/}
-                  updateIncident(changes);
+                  {/* console.log("3: passing to submit", changes, newState); */}
+                  updateDoc(changes);
                   //this.handleSubmit(changes);
                   // this.setState(changes);
                 }}
@@ -148,7 +160,11 @@ class Form extends Component {
                     let arrayText = field.arrayText ? field.arrayText : "Item";
                     if (field.type === "divider") {
                       return (
-                        <Heading style={{ fontSize: 17 }} key={index}>
+                        <Heading
+                          style={{ fontSize: 17 }}
+                          key={index}
+                          styleName="mediumGutter"
+                        >
                           {field.label}
                         </Heading>
                       );
@@ -159,7 +175,7 @@ class Form extends Component {
                       return (
                         <Field
                           form={this.formRef}
-                          fieldRef={(field) => console.log(field)}
+                          fieldRef={field => console.log(field)}
                           type={ArrayInput}
                           fieldName={field.name}
                           key={`field-${field.name}`}
@@ -172,11 +188,20 @@ class Form extends Component {
                               return (
                                 <Field
                                   form={this.formRef}
-                                  fieldRef={(field, fieldName) => this.fields[fieldName] = field}
-                                  getNextField={(fieldName) => {
-                                    const nextFieldName = _.get(field, `fields[${subIndex + 1}].name`);
-                                    if (nextFieldName){
-                                      return this.fields[fieldName.replace(/([^.]+)$/, nextFieldName)];
+                                  fieldRef={(field, fieldName) =>
+                                    this.fields[fieldName] = field}
+                                  getNextField={fieldName => {
+                                    const nextFieldName = _.get(
+                                      field,
+                                      `fields[${subIndex + 1}].name`
+                                    );
+                                    if (nextFieldName) {
+                                      return this.fields[
+                                        fieldName.replace(
+                                          /([^.]+)$/,
+                                          nextFieldName
+                                        )
+                                      ];
                                     }
                                   }}
                                   type={this.getFieldType(subField.type)}
@@ -185,7 +210,11 @@ class Form extends Component {
                                   label={subField.label}
                                   placeHolder={subField.label}
                                   arrayText={arrayText}
-                                  returnKeyType={field.fields.length === subIndex ? 'done' : 'next'}
+                                  returnKeyType={
+                                    field.fields.length === subIndex
+                                      ? "done"
+                                      : "next"
+                                  }
                                 />
                               );
                             })}
@@ -194,24 +223,31 @@ class Form extends Component {
                       );
                     }
                     return (
-                      <Field
-                        form={this.formRef}
-                        type={this.getFieldType(field.type)}
-                        fieldRef={(field, fieldName) => this.fields[fieldName] = field}
-                        getNextField={() => {
-                          const nextFieldName = _.get(fields, `[${index + 1}].name`);
-                            console.log(fields, nextFieldName, index + 1)
-                          if (nextFieldName){
-                            return this.fields[nextFieldName];
+                      <View key={`field-${field.name}`}>
+                        <Field
+                          form={this.formRef}
+                          type={this.getFieldType(field.type)}
+                          fieldRef={(field, fieldName) =>
+                            this.fields[fieldName] = field}
+                          getNextField={() => {
+                            const nextFieldName = _.get(
+                              fields,
+                              `[${index + 1}].name`
+                            );
+                            console.log(fields, nextFieldName, index + 1);
+                            if (nextFieldName) {
+                              return this.fields[nextFieldName];
+                            }
+                          }}
+                          fieldName={field.name}
+                          label={field.label}
+                          placeHolder={field.label}
+                          arrayText={arrayText}
+                          returnKeyType={
+                            fields.length === index ? "done" : "next"
                           }
-                        }}
-                        fieldName={field.name}
-                        key={`field-${field.name}`}
-                        label={field.label}
-                        placeHolder={field.label}
-                        arrayText={arrayText}
-                        returnKeyType={fields.length === index ? 'done' : 'next'}
-                      />
+                        />
+                      </View>
                     );
                   })}
                 </View>

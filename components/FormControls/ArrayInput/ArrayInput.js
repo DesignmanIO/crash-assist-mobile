@@ -57,7 +57,7 @@ class ArrayInput extends ArrayComponent {
     if (!this.props.showAddButton) return;
     if (this.props.disabled) return;
     return (
-      <Button onPress={() => this.addItem()} style={style.addButton} styleName="full-width">
+      <Button onPress={() => this.addItem()} style={style.addButton} styleName="full-width sm-gutter-top">
         <Icon name="ios-add" style={style.addButtonIcon} />
         <Text styleName="bright" style={style.addButtonText}>
           {this.props.passProps.arrayText

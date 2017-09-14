@@ -3,6 +3,7 @@
  */
 import React, { Component } from "react";
 import { TextInput as ShoutemInput } from "@shoutem/ui";
+import {connectStyle} from '@shoutem/theme';
 import { CheckBox as RNECheckBox } from "react-native-elements";
 import {colors} from '../../../config/theme';
 
@@ -33,7 +34,7 @@ class CheckBox extends Component {
   }
 
   render() {
-    const { passProps } = this.props;
+    const { passProps, style } = this.props;
     return (
       <RNECheckBox
         title={this.props.label}
@@ -48,10 +49,10 @@ class CheckBox extends Component {
         onPress={() => {
           this.onChange(!this.state.checked);
         }}
-        style={{ height: 55}}
+        style={style.checkbox}
       />
     );
   }
 }
 
-export default CheckBox;
+export default connectStyle('ca.component.CheckBox')(CheckBox);

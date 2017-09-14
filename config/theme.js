@@ -37,12 +37,12 @@ const theme = {
       backgroundColor: colors.primaryBlue,
       borderRadius: 3
     },
-    addButtonIcon: { 
-      color: colors.white, 
-      fontSize: 20 
+    addButtonIcon: {
+      color: colors.white,
+      fontSize: 20
     },
     addButtonText: {
-      fontSize: 14,
+      fontSize: 14
     }
   },
   "ca.component.TextInput": {
@@ -55,9 +55,12 @@ const theme = {
   },
   "ca.component.PhotoInput": {
     touch: {
-      flex: 0
+      flex: 0,
     },
     wrapper: {
+      marginBottom: 20,
+    },
+    innerWrapper: {
       backgroundColor: colors.white,
       height: 80,
       width: 80,
@@ -67,12 +70,33 @@ const theme = {
       borderColor: colors.grey,
       alignItems: "center",
       justifyContent: "space-around",
-      marginBottom: 20
     },
     icon: {
       color: colors.grey,
       fontSize: 20,
       textAlign: "center"
+    },
+    image: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "transparent"
+    },
+    label: {
+      paddingLeft: 20,
+      flex: 1,
+    },
+  },
+  "ca.component.CheckBox": {
+    checkbox: {
+      marginHorizontal: 0,
+      padding: 5,
+      marginVertical: 5,
+      borderWidth: 0.5,
+      borderColor: colors.lightGrey,
+      borderRadius: 3
     }
   }
 };

@@ -2,20 +2,19 @@ import React, { Component } from "react";
 import {
   View,
   Button,
-  Modal,
   Image,
   Text,
   Heading,
   TouchableOpacity,
-  Lightbox,
   ScrollView
 } from "@shoutem/ui";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Constants } from "expo";
 import { connectStyle } from "@shoutem/theme";
 import Meteor, { createContainer, getData } from "react-native-meteor";
-import { AsyncStorage, Alert } from "react-native";
+import { AsyncStorage, Alert, Modal } from "react-native";
 import { NavigationActions } from "react-navigation";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import { Store } from "../../main";
 import theme from "../../config/theme";
@@ -27,29 +26,14 @@ import Disclaimer from "../../components/Disclaimer";
 // import './Landing.scss';
 
 class Home extends Component {
-  // static navigationOptions = {
-  // header(navigation, defaultHeader) {
-  // todo: left off here, need to figure this header out
-  // console.log(defaultHeader);
-  /*return {
-        ...defaultHeader,
-        right: (
-          <TouchableOpacity onPress={() => { navigation.navigate("DrawerOpen") }}>
-            <Icon name="menu" style={menuStyle} />
-          </TouchableOpacity>
-        ),
-        visible: true,
-      };*/
-  // },
-  // }
-
   constructor(props) {
     super(props);
-    // this.state = {};
+    this.state = {
+      showAgreement: false
+    };
   }
 
   async componentWillMount() {
-    // console.log(Constants.deviceId, Constants);
     const token = await AsyncStorage.getItem("reactnativemeteor_usertoken");
     console.log(token);
     if (token) {
@@ -62,7 +46,7 @@ class Home extends Component {
           AsyncStorage.setItem("reactnativemeteor_usertoken", result.token);
           getData()._tokenIdSaved = result.token;
           Meteor._userIdSaved = result.id;
-          console.log('logged in first time', error, result);
+          console.log("logged in first time", error, result);
         }
       );
     }
@@ -143,8 +127,10 @@ class Home extends Component {
   goToIncident() {
     const { navigation } = this.props;
     let incidentId;
+    console.log('going to incident');
     if (!Meteor.userId()) {
       Alert.alert("Not logged in! Something's wrong...");
+      return;
     }
     if (this.props.incompleteIncident) {
       incidentId = this.props.incompleteIncident._id;
@@ -174,7 +160,7 @@ class Home extends Component {
     const { style } = this.props;
     // console.log(this.props.user);
     return (
-      <View style={style.wrapper} styleName="vertical h-center">
+      <View style={style.wrapper} styleName="vertical h-center fill-parent">
         <Heading styleName="h-center" style={style.header}>
           Remain Calm, {"\n"}We'll help you through this!
         </Heading>
@@ -182,48 +168,41 @@ class Home extends Component {
           source={require("../../assets/crash.png")}
           style={{ width: 240, height: 48 }}
         />
-        <Lightbox
-          backgroundColor="white"
-          style={{ alignSelf: "stretch" }}
-          swipeToDismiss={false}
-          pinchToZoom={false}
-          renderHeader={close => {
-            this.confirmDisclaimer = close;
-            return null;
-          }}
-          renderContent={() => {
-            return (
-              <View styleName="fill-parent">
-                <Disclaimer />
-                <Button
-                  onPress={() => {
-                    this.confirmDisclaimer();
-                    //setTimeout(() => {
-                    this.goToIncident();
-                    //}, 300);
-                  }}
-                  style={style.incidentButton}
-                >
-                  <Text styleName="bright">
-                    Agree
-                  </Text>
-                </Button>
-              </View>
-            );
-          }}
-        >
-
-          <View
-            style={style.incidentButton}
-            styleName="vertical h-center v-center"
-          >
-            <Text styleName="bright">
-              {this.props.incompleteIncident
-                ? "Continue Incident"
-                : "New Incident"}
-            </Text>
+        <Modal visible={this.state.showAgreement} animationType="slide">
+          <View styleName="lg-gutter-top fill-parent space-around">
+            <MaterialIcons
+              name="close"
+              size={22}
+              onPress={() => this.setState({ showAgreement: false })}
+              style={{ position: "absolute", top: 25, right: 20 }}
+            />
+            <Disclaimer />
+            <Button
+              onPress={() => {
+                this.setState({ showAgreement: false });
+                setTimeout(() => {
+                  this.goToIncident();
+                }, 300);
+              }}
+              style={style.incidentButton}
+            >
+              <Text styleName="bright">
+                Agree
+              </Text>
+            </Button>
           </View>
-        </Lightbox>
+        </Modal>
+        <Button
+          style={style.incidentButton}
+          styleName="vertical h-center v-center"
+          onPress={() => this.setState({ showAgreement: true })}
+        >
+          <Text styleName="bright">
+            {this.props.incompleteIncident
+              ? "Continue Incident"
+              : "New Incident"}
+          </Text>
+        </Button>
       </View>
     );
   }

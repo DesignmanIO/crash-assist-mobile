@@ -1,0 +1,42 @@
+{
+  "_id": "si1",
+  "title": "Scene Info",
+  "subtitle": "Enter important information about the accident scene. This will be important for insurance purposes.",
+  "fields": [
+    {
+      "name": "timeLocation.date",
+      "type": "date",
+      "label": "Date"
+    },
+    {
+      "name": "timeLocation.time",
+      "type": "time",
+      "label": "Time"
+    },
+    {
+      "name": "timeLocation.location",
+      "type": "textarea",
+      "label": "Location (e.g. address or cross street)"
+    },
+    {
+      "name": "trafficInfo.roadConditions",
+      "type": "textarea",
+      "label": "Road conditions (e.g. wet, foggy)"
+    },
+    {
+      "name": "trafficInfo.trafficControls",
+      "type": "textarea",
+      "label": "Traffic controls (signs, traffic cones, etc...)"
+    },
+    {
+      "name": "sketch",
+      "type": "photo",
+      "label": "Draw a sketch of the accident scene, then upload a photo"
+    },
+    {
+      "name": "photos",
+      "type": "photo",
+      "label": "Take photos of the accident (be safe!). Include damage to vehicles, wide angle photos of the scene, photos of skid marks, traffic controls, and any other relevant details."
+    }
+  ]
+}

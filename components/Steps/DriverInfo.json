@@ -1,12 +1,12 @@
 {
-  "_id": "sf1",
+  "_id": "di1",
   "title": "Driver Info",
   "subtitle": "Collect information from the other driver.",
   "fields": [
     {
       "name": "driverInfo.licensePhoto",
       "type": "photo",
-      "label": "Photo of License"
+      "label": "Include a photo of their driver's license."
     },
     {
       "name": "driverInfo.name",

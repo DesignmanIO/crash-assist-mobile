@@ -1,8 +1,8 @@
-import Step from './Step'
-const safetyFirst = require('./SafetyFirst.json');
-const dosDonts = require('./DosDonts.json');
-const witnessInfo = require('./WitnessInfo.json');
-const driverInfo = require('./DriverInfo.json');
+const safetyFirst = require("./SafetyFirst");
+const dosDonts = require("./DosDonts");
+const witnessInfo = require("./WitnessInfo");
+const driverInfo = require("./DriverInfo");
+const sceneInfo = require("./SceneInfo");
+const nextSteps = require("./NextSteps");
 
-export {safetyFirst, dosDonts, witnessInfo, driverInfo};
-export default Step;
+export { safetyFirst, dosDonts, witnessInfo, driverInfo, sceneInfo, nextSteps };

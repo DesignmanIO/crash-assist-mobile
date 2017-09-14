@@ -13,13 +13,15 @@ import { appState } from "./config/redux";
 import MainDrawer from "./components/MainDrawer";
 import theme from "./config/theme";
 import renderIf from "./lib/renderIf";
+import IncidentComplete from './views/IncidentComplete';
 
 // Meteor.connect("wss://crashassistapp.com/websocket");
 Meteor.connect("ws://localhost:3000/websocket");
 
 const AppNavigator = StackNavigator(
   {
-    MainDrawer: { screen: MainDrawer }
+    MainDrawer: { screen: MainDrawer },
+    IncidentComplete: { screen: IncidentComplete },
   },
   {
     headerMode: "screen",

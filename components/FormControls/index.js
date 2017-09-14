@@ -11,6 +11,8 @@ import EmailInput from './EmailInput';
 import ArrayInput from './ArrayInput';
 import Form from './Form';
 import CheckBox from './CheckBox';
+import TimeInput from './TimeInput';
+import PasswordInput from './PasswordInput';
 
 export {
   TextInput,
@@ -23,4 +25,6 @@ export {
   ArrayInput,
   Form,
   CheckBox,
+  TimeInput,
+  PasswordInput,
 };

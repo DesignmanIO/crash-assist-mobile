@@ -18,7 +18,7 @@ class TextareaInput extends Component {
     return (
       <TextInput
         {...this.props}
-        passProps={this.props.passProps}
+        passProps={{...this.props.passProps, returnKeyType: 'none'}}
         height={height}
         multiline={true}
         onContentSizeChange={size => {

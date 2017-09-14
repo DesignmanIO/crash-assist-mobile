@@ -15,7 +15,7 @@ const MainDrawer = DrawerNavigator(
   {
     Home: { screen: Home },
     PastIncidents: { screen: PastIncidents },
-    Incident: { screen: Incident }
+    Incident: { screen: Incident },
   },
   {
     navigationOptions: {

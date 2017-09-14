@@ -1,0 +1,27 @@
+{
+  "_id": "ca1",
+  "title": "Create an account",
+  "subtitle": "Create an account so you can access your information online.",
+  "fields": [
+    {
+      "name": "email",
+      "type": "email",
+      "label": "Email address"
+    },
+    {
+      "name": "password",
+      "type": "password",
+      "label": "Password"
+    },
+    {
+      "name": "confirmPassword",
+      "type": "password",
+      "label": "Confirm password"
+    },
+    {
+      "name": "optIn",
+      "type": "checkbox",
+      "label": "Receive followup emails with important information and services."
+    }
+  ]
+}
