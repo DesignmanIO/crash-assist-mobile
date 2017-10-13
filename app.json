@@ -22,7 +22,16 @@
       ]
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.crashassist.app",
+      "buildNumber": 1
+    },
+    "android": {
+      "package": "com.crashassist.app",
+      "versionCode": 101005,
+      "permissions": [
+        "CAMERA"
+      ]
     }
   }
 }
