@@ -1,5 +1,6 @@
 import SimpleSchema from 'simpl-schema';
-import {Incident, Incidents} from '../imports/shared/collections/Incidents.js';
+import moment from 'moment';
+import {Match} from 'meteor-check';
 
 import {
   TextInput,
@@ -12,6 +13,14 @@ import {
   ArrayInput,
   CheckBox,
 } from '../components/FormControls';
+
+SimpleSchema.extendOptions({
+  index: Match.Optional(Match.OneOf([Number, String, Boolean])),
+  unique: Match.Optional(Boolean),
+  denyInsert: Match.Optional(Boolean),
+  denyUpdate: Match.Optional(Boolean),
+  srf: Match.Optional(Object)
+});
 
 const formSchema = new SimpleSchema({
   "completed": {type: Boolean, defaultValue() { return false; }},
@@ -86,6 +95,6 @@ const formSchema = new SimpleSchema({
   "symptoms": {type: String, srf: {type: TextareaInput}, optional: true}
 });
 
-Incidents.simpleSchema = (doc, options, query) => formSchema;
+incidentSchema = (doc, options, query) => formSchema;
 
-export {Incidents, Incident};
+export default incidentSchema;

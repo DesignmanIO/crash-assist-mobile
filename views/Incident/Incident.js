@@ -25,7 +25,7 @@ import { flatten } from "flat";
 import { Alert, InteractionManager } from "react-native";
 
 import renderIf from "../../lib/renderIf";
-import { Incidents } from "../../schema/Incidents";
+import schema from "../../schema/Incidents";
 import { colors } from "../../config/theme";
 import {
   safetyFirst,
@@ -340,7 +340,7 @@ export default hoistNonReactStatic(
       // const { incidentId } = props.navigation.state.params;
       const { incidentId } = props;
       const incidents = Meteor.collection("incidents");
-      incidents.simpleSchema = Incidents.simpleSchema;
+      incidents.simpleSchema = schema;
       const incidentSubscription = Meteor.subscribe(
         "SingleIncident",
         incidentId

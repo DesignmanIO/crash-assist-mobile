@@ -6,7 +6,9 @@
   "private": true,
   "main": "main.js",
   "scripts": {
-    "postinstall": "rn-nodeify --install fs,dgram,process,path,console --hack"
+    "postinstall": "rn-nodeify --install fs,dgram,process,path,console --hack",
+    "version": "json -I -f ./app.json -e 'this.expo.version=\"'$npm_package_version'\"'",
+    "postversion": "git push && exp p"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^1.0.1",
