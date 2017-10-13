@@ -1,6 +1,6 @@
 import Expo, { Font } from "expo";
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, AsyncStorage } from "react-native";
 import { StackNavigator } from "react-navigation";
 import { StyleProvider } from "@shoutem/theme";
 import { Spinner } from "@shoutem/ui";
@@ -8,12 +8,13 @@ import { combineReducers, createStore } from "redux";
 import { connect, Provider } from "react-redux";
 import Meteor from "react-native-meteor";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
+import { persistStore } from "redux-persist";
 
 import { appState } from "./config/redux";
 import MainDrawer from "./components/MainDrawer";
 import theme from "./config/theme";
 import renderIf from "./lib/renderIf";
-import IncidentComplete from './views/IncidentComplete';
+import IncidentComplete, { CreateAccount } from "./views/IncidentComplete";
 
 // Meteor.connect("wss://crashassistapp.com/websocket");
 Meteor.connect("ws://localhost:3000/websocket");
@@ -22,12 +23,13 @@ const AppNavigator = StackNavigator(
   {
     MainDrawer: { screen: MainDrawer },
     IncidentComplete: { screen: IncidentComplete },
+    CreateAccount: { screen: CreateAccount }
   },
   {
     headerMode: "screen",
     cardStyle: {
-      backgroundColor: "white",
-      paddingTop: 10
+      backgroundColor: "white"
+      // paddingTop: 10
     }
   }
 );
@@ -37,15 +39,18 @@ const navReducer = (state, action) => {
   return newState ? newState : state;
 };
 
-const appReducer = combineReducers({
-  appState,
-  nav: navReducer
-});
+const Store = createStore(
+  combineReducers({
+    appState,
+    nav: navReducer
+  })
+);
+persistStore(Store, { storage: AsyncStorage, blacklist: ["nav"] }, () =>
+  console.log("restored", Store.getState())
+);
 
-const Store = createStore(appReducer);
-
-@connect(({ nav, appState }) => {
-  return { nav, appState };
+@connect(({ nav }) => {
+  return { nav };
 })
 class App extends Component {
   constructor(props) {

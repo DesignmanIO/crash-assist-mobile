@@ -2,7 +2,8 @@
  * Created by Julian on 2/13/17.
  */
 // todo: change this to HOC syntax
-import React, { PropTypes, Component } from "react";
+import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import TextInput from "../TextInput";
 import hoistNonReactStatic from "hoist-non-react-statics";
 

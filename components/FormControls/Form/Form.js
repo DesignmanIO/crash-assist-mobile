@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import {
   KeyboardAvoidingView,
   Animated,
@@ -22,19 +23,26 @@ import {
   TextareaInput,
   TextInput,
   TimeInput,
-  PasswordInput,
+  PasswordInput
 } from "../";
 import renderIf from "../../../lib/renderIf";
 
 class Form extends Component {
+  static defaultProps = {
+    initialKeyboardSpacerHeight: 5
+  };
+
   constructor(props) {
     super(props);
 
     this.state = {
-      doc: this.props.doc
+      doc: this.props.doc,
+      formHeight: undefined
     };
 
-    this.formHeight = new Animated.Value(20);
+    this.spacerHeight = new Animated.Value(
+      this.props.initialKeyboardSpacerHeight
+    );
     this.keyboardWillShow = this.keyboardWillShow.bind(this);
     this.keyboardWillHide = this.keyboardWillHide.bind(this);
     // this.handleSubmit = this.handleSubmit.bind(this);
@@ -63,7 +71,7 @@ class Form extends Component {
 
   keyboardWillShow(event) {
     Animated.parallel([
-      Animated.timing(this.formHeight, {
+      Animated.timing(this.spacerHeight, {
         duration: event.duration,
         toValue: event.endCoordinates.height
       })
@@ -72,9 +80,9 @@ class Form extends Component {
 
   keyboardWillHide(event) {
     Animated.parallel([
-      Animated.timing(this.formHeight, {
+      Animated.timing(this.spacerHeight, {
         duration: event.duration,
-        toValue: 20
+        toValue: this.props.initialKeyboardSpacerHeight
       })
     ]).start();
   }
@@ -116,22 +124,19 @@ class Form extends Component {
 
   render() {
     const { collection, doc, formId, updateDoc, step } = this.props;
+    const { formHeight } = this.state;
     const { fields, title, subtitle, _id } = step;
+    // console.log(formHeight);
     return (
-      <View
-        style={{
-          flex: 1,
-          paddingVertical: 20,
-          paddingHorizontal: 20,
-          paddingBottom: 100,
-          justifyContent: "space-around"
-        }}
-      >
+      <View styleName="inflexible md-gutter vertical space-around">
         <Heading styleName="h-center" style={{ marginBottom: 10 }}>
           {title}
         </Heading>
         <HTMLView value={subtitle} />
-        <ScrollView styleName="sm-gutter-top">
+        <ScrollView
+          styleName="sm-gutter-top"
+          style={{ marginTop: 10, maxHeight: formHeight }}
+        >
           {renderIf(
             true,
             () => (
@@ -142,11 +147,16 @@ class Form extends Component {
                 ref={form => this.formRef = form}
                 formId={formId}
                 state={this.state.doc}
-                onChange={(newState, changes) => {
-                  {/* console.log("3: passing to submit", changes, newState); */}
+                onChange={newState => {
+                  const changes = _.omitBy(
+                    newState,
+                    (v, k) => this.state.doc[k] === v
+                  );
+                  delete changes.dateCreated;
+                  console.log("3: passing to submit");
                   updateDoc(changes);
                   //this.handleSubmit(changes);
-                  // this.setState(changes);
+                  this.setState(changes);
                 }}
                 onSuccess={docId => {
                   //console.log(`succeeded saving ${docId}`);
@@ -155,7 +165,12 @@ class Form extends Component {
                   //console.log(`submitted ${docId}`);
                 }}
               >
-                <View styleName="vertical">
+                <View
+                  styleName="vertical"
+                  onLayout={({ nativeEvent: { layout } }) => {
+                    this.setState({ formHeight: layout.height });
+                  }}
+                >
                   {fields.map((field, index) => {
                     let arrayText = field.arrayText ? field.arrayText : "Item";
                     if (field.type === "divider") {
@@ -250,15 +265,15 @@ class Form extends Component {
                       </View>
                     );
                   })}
+                  <Animated.View
+                    transition={["height"]}
+                    style={{ height: this.spacerHeight }}
+                  />
                 </View>
               </SRForm>
             ),
             () => <Spinner />
           )}
-          <Animated.View
-            transition={["height"]}
-            style={{ height: this.formHeight }}
-          />
         </ScrollView>
       </View>
     );

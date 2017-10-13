@@ -1,7 +1,8 @@
 /**
  * Created by Julian on 2/13/17.
  */
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { View, TouchableOpacity } from "@shoutem/ui";
 import TextInput from "../TextInput";
 import DatePicker from "react-native-modal-datetime-picker";

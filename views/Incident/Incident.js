@@ -22,7 +22,7 @@ import _ from "lodash";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { connectStyle } from "@shoutem/theme";
 import { flatten } from "flat";
-import { Alert } from "react-native";
+import { Alert, InteractionManager } from "react-native";
 
 import renderIf from "../../lib/renderIf";
 import { Incidents } from "../../schema/Incidents";
@@ -35,6 +35,7 @@ import {
   sceneInfo,
   nextSteps
 } from "../../components/Steps";
+import { MenuButton } from "../../components/MainDrawer";
 import { Form } from "../../components/FormControls";
 // import {
 //   TextInput,
@@ -56,7 +57,7 @@ class Incident extends Component {
     //   console.log(state);
     //   return `Incident #${state.params.incidentId}`
     // },
-    headerVisible: false
+    header: null
   };
 
   constructor(props) {
@@ -65,7 +66,8 @@ class Incident extends Component {
     this.state = {
       incident: {},
       loading: true,
-      stagedChanges: {}
+      stagedChanges: {},
+      currentStep: _.get(this.props, "incident.currentStep", 0)
     };
 
     this.saveIncident = _.debounce(this.saveIncident, 1000, {
@@ -76,17 +78,23 @@ class Incident extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.state.incident) {
       if (nextProps.incident) {
-        console.log("found incident, setting state");
-        this.setState({ incident: nextProps.incident });
+        InteractionManager.runAfterInteractions(() => {
+          // console.log("found incident, setting state", nextProps.incident);
+          this.setState({ incident: nextProps.incident, loading: false });
+        });
       }
     } else if (nextProps.incident !== this.state.incident) {
-      // console.log("Incident updated, setting state");
-      this.setState({ incident: nextProps.incident });
+      InteractionManager.runAfterInteractions(() => {
+        console.log("Incident updated, setting state");
+        this.setState({ incident: nextProps.incident, loading: false });
+      });
+    } else {
+      console.log("no incident for some reason", nextProps);
     }
   }
 
   setIndex(index) {
-    // console.log("setting index", this.props.incident._id);
+    // console.log("setting index", this.props);
     this.props.incidents.update(
       this.props.incident._id,
       { $set: { currentStep: index } },
@@ -98,7 +106,7 @@ class Incident extends Component {
 
   updateIncident(changesToStage) {
     const incident = { ...this.state.incident, ...changesToStage };
-    console.log("update", _.merge(this.state.stagedChanges, changesToStage) );
+    // console.log("update", this.state.stagedChanges, changesToStage);
     this.setState(
       {
         incident,
@@ -115,7 +123,7 @@ class Incident extends Component {
   saveIncident() {
     const { incident } = this.props;
     const mongoReadyChanges = flatten(this.state.stagedChanges, { safe: true });
-    console.log("save", this.state.stagedChanges, mongoReadyChanges);
+    // console.log("save", this.state.stagedChanges, mongoReadyChanges);
     // const toBeUpdated = _.omit(incident, this.state.incident)
     this.props.incidents.update(
       incident._id,
@@ -131,6 +139,8 @@ class Incident extends Component {
 
   render() {
     // console.log(this.props.navigation);
+    // console.log("state, prop", this.state, this.props);
+    const { currentStep } = this.state;
     const formParts = [
       safetyFirst,
       dosDonts,
@@ -139,17 +149,20 @@ class Incident extends Component {
       sceneInfo,
       nextSteps
     ];
+    const { incident } = this.props;
+
     return (
-      <View>
+      <View styleName="fill-parent">
         {renderIf(this.state.loading, () => (
           <Spinner style={{ position: "absolute", top: 15, right: 15 }} />
         ))}
+        <MenuButton navigation={this.props.navigation} />
         <Swiper
           loop={false}
           scrollEnabled={false}
-          onResponderRelease={(e, state, context) => this.setIndex(state.index)}
-          index={this.props.incident ? this.props.incident.currentStep || 0 : 0}
-          renderPagination={(index, total, context) => {
+          //onResponderRelease={(e, state, context) => this.setIndex(state.index)}
+          index={currentStep}
+          renderPagination={(index, pageCount, context) => {
             return (
               <View
                 styleName="vertical"
@@ -177,16 +190,23 @@ class Incident extends Component {
                     }}
                   />
                   <View styleName="horizontal v-center space-between">
-                    {_.range(total).map(sIndex => {
-                      const dimension = index === sIndex ? 24 : 16;
+                    {_.range(pageCount).map(stepIndex => {
+                      const dimension = index === stepIndex ? 24 : 16;
                       return (
                         <TouchableOpacity
                           onPress={() => {
-                            const newIndex = sIndex - index;
+                            const newIndex = stepIndex - index;
+                            console.log(
+                              "going to ",
+                              newIndex,
+                              pageCount,
+                              index,
+                              stepIndex
+                            );
                             context.scrollBy(newIndex);
                             this.setIndex(newIndex);
                           }}
-                          key={`page-${sIndex}`}
+                          key={`page-${stepIndex}`}
                         >
                           <View
                             style={{
@@ -198,8 +218,11 @@ class Incident extends Component {
                             }}
                             styleName="horizontal v-center h-center"
                           >
-                            <Text styleName="bright h-center v-center">
-                              {sIndex === index && sIndex + 1}
+                            <Text
+                              styleName="h-center v-center"
+                              style={{ color: "white" }}
+                            >
+                              {stepIndex === index && stepIndex + 1}
                             </Text>
                           </View>
                         </TouchableOpacity>
@@ -219,8 +242,7 @@ class Incident extends Component {
                     style={{
                       borderColor: "#ccc",
                       borderRightWidth: 0.5,
-                      marginTop: 5,
-                      marginBottom: 12
+                      marginVertical: 5
                     }}
                   >
                     <Icon name="chevron-left" />
@@ -236,8 +258,7 @@ class Incident extends Component {
                           this.setIndex(context.state.index + 1);
                         }}
                         style={{
-                          marginTop: 5,
-                          marginBottom: 12
+                          marginVertical: 5
                         }}
                       >
                         <Text>Next</Text>
@@ -248,6 +269,10 @@ class Incident extends Component {
                       <Button
                         styleName="full-width"
                         onPress={async () => {
+                          if (incident.completed) {
+                            this.props.navigation.navigate("Home");
+                            return;
+                          }
                           const finished = await new Promise(resolve => {
                             Alert.alert(
                               "Finalize?",
@@ -267,16 +292,12 @@ class Incident extends Component {
                             );
                           });
                           if (finished) {
+                            this.updateIncident({ completed: true });
                             this.props.navigation.navigate("IncidentComplete");
-                            {
-                              /*context.scrollBy(1);
-                            this.setIndex(0);*/
-                            }
                           }
                         }}
                         style={{
-                          marginTop: 5,
-                          marginBottom: 12
+                          marginVertical: 5
                         }}
                       >
                         <Text>Done</Text>
@@ -288,6 +309,7 @@ class Incident extends Component {
               </View>
             );
           }}
+          style={{ paddingBottom: 100, paddingTop: 10 }}
           showsPagination
         >
           {formParts.map(step => (
@@ -296,6 +318,7 @@ class Incident extends Component {
               step={step}
               doc={this.props.incident}
               updateDoc={params => this.updateIncident(params)}
+              initialKeyboardSpacerHeight={100}
             />
           ))}
           {/*<View styleName="fill-parent" key="finished">
@@ -325,7 +348,7 @@ export default hoistNonReactStatic(
       return {
         incidentId,
         incidents,
-        incident: Meteor.collection("incidents").findOne({}),
+        incident: Meteor.collection("incidents").findOne(incidentId),
         incidentReady: incidentSubscription.ready()
       };
     }, connectStyle("ca.view.Incident", {})(Incident))

@@ -1,15 +1,18 @@
 import React, { Component } from "react";
-import {View, ScrollView, Heading, Subtitle, Button, Text} from '@shoutem/ui';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Meteor, {Accounts} from 'react-native-meteor';
+import { View, ScrollView, Heading, Subtitle, Button, Text } from "@shoutem/ui";
+import { MaterialIcons } from "@expo/vector-icons";
+import Meteor, { Accounts } from "react-native-meteor";
 import { Constants } from "expo";
+import _ from 'lodash';
+import {NavigationActions} from 'react-navigation'
 
 import { Form } from "../../components/FormControls";
-import createAccount from './CreateAccount.json';
+import createAccount from "./CreateAccount.json";
+import { colors } from "../../config/theme";
 
 class IncidentComplete extends Component {
   static navigationOptions = {
-    headerVisible: false,
+    header: null
   };
 
   constructor(props) {
@@ -17,96 +20,42 @@ class IncidentComplete extends Component {
 
     this.state = {
       user: {
-        email: '',
-        password: '',
-        confirmPassword: '',
-        optIn: true,
+        email: "",
+        password: "",
+        confirmPassword: "",
+        optIn: true
       }
     };
-
-    this.createAccount = this.createAccount.bind(this);
   }
 
-  updateUser(params) {
-    const user = { ...this.state.user, ...params };
-    // console.log("update", params);
-    this.setState({ user }, () => {
-      // this.saveIncident();
-    });
+  componentWillMount() {
+    setTimeout(() => {
+      const user = Meteor.user();
+
+      if (user.emails &&  user.emails.length) {
+        this.props.navigation.dispatch(NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({routeName: "MainDrawer"})]
+        }));
+      } else {
+        console.log('going to create account');
+        this.props.navigation.navigate("CreateAccount");
+      }
+    }, 3000);
   }
-
-  createAccount() {
-        const {email, password, optIn} = this.state.user;
-        console.log(email, password, optIn);
-
-        if (false) {
-          // This should only run when someone first logs in
-          Meteor.logout(()=> {
-            Meteor.loginWithPassword(email, password, (error)=> {
-              if (!error) {
-                Meteor.call("CheckDuplicateAccountByDevice", Constants.deviceId)
-                // navigator.replacePage({component: Landing, props: {key: "landing"}})
-                // notify.show('Logged in successfully', 'success');
-              } else {
-                setState({loginError: error.reason});
-              }
-            });
-          });
-        } else {
-          Meteor.call("setEmailAddress", email, optIn, (error)=> {
-            if (!error) {
-              Accounts.changePassword(Meteor.user().username, password, (error)=> {
-                if (!error) {
-                  console.log('yay, succeeded setting password!');
-                } else {
-                  console.log('boo, error!', error);
-                  this.setState({loginError: error.reason});
-                }
-              });
-              // notify.show('Information updated', 'success');
-              console.log('succeeded setting email address');
-            } else {
-              console.log('boo, error!', error);
-              this.setState({loginError: error.reason});
-            }
-          });
-        }
-    }
 
   render() {
     return (
-      <ScrollView>
-        <View>
-          <Icon name="thumb-up"/>
-          <Heading>All Done!</Heading>
+      <View styleName="fill-parent md-gutter-horizontal vertical h-center space-around">
+        <View styleName="vertical h-center xl-gutter-vertical">
+          <MaterialIcons name="thumb-up" size={35} color={colors.green} />
+          <Heading styleName="md-gutter-top sm-gutter-bottom" style={{ color: colors.green }}>
+            All Done!
+          </Heading>
           <Subtitle>Great job, we knew you could do it!</Subtitle>
         </View>
-        <Form 
-          doc={this.state}
-          step={createAccount}
-          updateDoc={(params) => this.updateUser(params)}
-        />
-        <Button
-          onPress={() => {
-            this.createAccount();
-          }}
-          styleName="primary bright dark"
-        >
-          <Text styleName="bright">
-            Create Account
-          </Text>
-        </Button>
-        <Button
-          onPress={() => {
-            console.log('done!');
-          }}
-        >
-          <Text>
-            Skip
-          </Text>
-        </Button>
-      </ScrollView>
-    )
+      </View>
+    );
   }
 }
 

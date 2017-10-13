@@ -2,15 +2,18 @@
  * Created by Julian on 2/13/17.
  */
 import React from "react";
+import PropTypes from 'prop-types';
 import { ArrayComponent } from "simple-react-form";
 import { Button, Row, Subtitle, Text, View } from "@shoutem/ui";
 import Icon from "react-native-vector-icons/Ionicons";
 import {connectStyle} from '@shoutem/theme';
+
+import ArrayContextItem from './ArrayContextItem';
 // import TextInput from '../TextInput';
 
 class ArrayInput extends ArrayComponent {
   static propTypes = {
-    passProps: React.PropTypes.object
+    passProps: PropTypes.object
   };
 
   constructor(props) {
@@ -24,6 +27,14 @@ class ArrayInput extends ArrayComponent {
   getChildrenComponents (item, index) {
     if (this.props.passProps.renderItem) return this.props.passProps.renderItem(item, index)
     if (this.props.passProps.children) return this.props.passProps.children
+  }
+
+  renderChildrenItemWithContext({index, children}) {
+    return (
+      <ArrayContextItem index={index} fieldName={this.props.fieldName}>
+        {children}
+      </ArrayContextItem>
+    )
   }
 
   renderChildrenItem({ index, children }) {
@@ -59,7 +70,7 @@ class ArrayInput extends ArrayComponent {
     return (
       <Button onPress={() => this.addItem()} style={style.addButton} styleName="full-width sm-gutter-top">
         <Icon name="ios-add" style={style.addButtonIcon} />
-        <Text styleName="bright" style={style.addButtonText}>
+        <Text style={style.addButtonText}>
           {this.props.passProps.arrayText
             ? `  Add ${this.props.passProps.arrayText}`
             : ""}

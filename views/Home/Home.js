@@ -15,9 +15,11 @@ import Meteor, { createContainer, getData } from "react-native-meteor";
 import { AsyncStorage, Alert, Modal } from "react-native";
 import { NavigationActions } from "react-navigation";
 import { MaterialIcons } from "@expo/vector-icons";
+import PropTypes from "prop-types";
 
 import { Store } from "../../main";
-import theme from "../../config/theme";
+import theme, { colors } from "../../config/theme";
+import {MenuButton} from '../../components/MainDrawer';
 const menuStyle = theme["ca.component.MenuIcon"];
 import Disclaimer from "../../components/Disclaimer";
 // console.log(menuStyle);
@@ -26,6 +28,10 @@ import Disclaimer from "../../components/Disclaimer";
 // import './Landing.scss';
 
 class Home extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    // header: null,
+  });
+
   constructor(props) {
     super(props);
     this.state = {
@@ -127,7 +133,7 @@ class Home extends Component {
   goToIncident() {
     const { navigation } = this.props;
     let incidentId;
-    console.log('going to incident');
+    console.log("going to incident");
     if (!Meteor.userId()) {
       Alert.alert("Not logged in! Something's wrong...");
       return;
@@ -158,10 +164,14 @@ class Home extends Component {
 
   render() {
     const { style } = this.props;
-    // console.log(this.props.user);
+    // this.props.navigation.navigate('CreateAccount');
     return (
-      <View style={style.wrapper} styleName="vertical h-center fill-parent">
-        <Heading styleName="h-center" style={style.header}>
+      <View
+        style={style.wrapper}
+        styleName="vertical h-center fill-parent lg-gutter-top"
+      >
+        <MenuButton navigation={this.props.navigation} />
+        <Heading styleName="h-center xl-gutter-top" style={style.header}>
           Remain Calm, {"\n"}We'll help you through this!
         </Heading>
         <Image
@@ -173,8 +183,11 @@ class Home extends Component {
             <MaterialIcons
               name="close"
               size={22}
-              onPress={() => this.setState({ showAgreement: false })}
-              style={{ position: "absolute", top: 25, right: 20 }}
+              onPress={() => {
+                console.log("close");
+                this.setState({ showAgreement: false });
+              }}
+              style={{ position: "absolute", top: 25, right: 20, zIndex: 1 }}
             />
             <Disclaimer />
             <Button
@@ -185,8 +198,9 @@ class Home extends Component {
                 }, 300);
               }}
               style={style.incidentButton}
+              styleName="secondary"
             >
-              <Text styleName="bright">
+              <Text>
                 Agree
               </Text>
             </Button>
@@ -194,10 +208,10 @@ class Home extends Component {
         </Modal>
         <Button
           style={style.incidentButton}
-          styleName="vertical h-center v-center"
+          styleName="vertical h-center v-center secondary"
           onPress={() => this.setState({ showAgreement: true })}
         >
-          <Text styleName="bright">
+          <Text>
             {this.props.incompleteIncident
               ? "Continue Incident"
               : "New Incident"}
@@ -209,9 +223,9 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  style: React.PropTypes.object,
-  incompleteIncident: React.PropTypes.object,
-  completeIncidents: React.PropTypes.bool
+  style: PropTypes.object,
+  incompleteIncident: PropTypes.object,
+  completeIncidents: PropTypes.bool
 };
 
 export default createContainer(props => {

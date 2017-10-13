@@ -6,6 +6,15 @@ import colors from "./colors";
 
 const theme = {
   ...getTheme(),
+  "shoutem.ui.Button": {
+    ...getTheme()["shoutem.ui.Button"],
+    ".primary": {
+      backgroundColor: colors.primaryBlue,
+      'shoutem.ui.Text': {
+        color: colors.white,
+      }
+    }
+  },
   "shoutem.ui.Heading": {
     ...getTheme()["shoutem.ui.Heading"],
     color: colors.primaryBlue
@@ -42,6 +51,7 @@ const theme = {
       fontSize: 20
     },
     addButtonText: {
+      color: colors.white,
       fontSize: 14
     }
   },
@@ -55,10 +65,10 @@ const theme = {
   },
   "ca.component.PhotoInput": {
     touch: {
-      flex: 0,
+      flex: 0
     },
     wrapper: {
-      marginBottom: 20,
+      marginBottom: 20
     },
     innerWrapper: {
       backgroundColor: colors.white,
@@ -69,7 +79,7 @@ const theme = {
       borderStyle: "dashed",
       borderColor: colors.grey,
       alignItems: "center",
-      justifyContent: "space-around",
+      justifyContent: "space-around"
     },
     icon: {
       color: colors.grey,
@@ -86,8 +96,8 @@ const theme = {
     },
     label: {
       paddingLeft: 20,
-      flex: 1,
-    },
+      flex: 1
+    }
   },
   "ca.component.CheckBox": {
     checkbox: {
@@ -97,6 +107,11 @@ const theme = {
       borderWidth: 0.5,
       borderColor: colors.lightGrey,
       borderRadius: 3
+    },
+    textStyle: {
+      margin: 0,
+      paddingHorizontal: 5,
+      flex: 1
     }
   }
 };

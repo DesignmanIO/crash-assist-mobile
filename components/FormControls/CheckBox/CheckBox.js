@@ -2,6 +2,7 @@
  * Created by Julian on 2/13/17.
  */
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { TextInput as ShoutemInput } from "@shoutem/ui";
 import {connectStyle} from '@shoutem/theme';
 import { CheckBox as RNECheckBox } from "react-native-elements";
@@ -9,11 +10,11 @@ import {colors} from '../../../config/theme';
 
 class CheckBox extends Component {
   static propTypes = {
-    onChange: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func,
-    label: React.PropTypes.string,
-    disabled: React.PropTypes.bool,
-    changeOnKeyDown: React.PropTypes.func
+    onChange: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    label: PropTypes.string,
+    disabled: PropTypes.bool,
+    changeOnKeyDown: PropTypes.func
   };
 
   constructor(props) {
@@ -49,7 +50,8 @@ class CheckBox extends Component {
         onPress={() => {
           this.onChange(!this.state.checked);
         }}
-        style={style.checkbox}
+        containerStyle={style.checkbox}
+        textStyle={style.textStyle}
       />
     );
   }

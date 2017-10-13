@@ -7,7 +7,7 @@ import hoistNonReactStatic from "hoist-non-react-statics";
 
 class PasswordInput extends Component {
   render() {
-    return <TextInput {...this.props} secureTextEntry />;
+    return <TextInput {...this.props} secureTextEntry autoCapitalize="none" />;
   }
 }
 

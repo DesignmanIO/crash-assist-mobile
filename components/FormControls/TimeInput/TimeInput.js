@@ -1,7 +1,8 @@
 /**
  * Created by Julian on 2/13/17.
  */
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { View, TouchableOpacity } from "@shoutem/ui";
 import TextInput from "../TextInput";
 import DatePicker from "react-native-modal-datetime-picker";
@@ -28,14 +29,6 @@ class TimeInput extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.state.value) {
       this.setState({ value: nextProps.value });
-    }
-  }
-
-  onChange(event) {
-    this.setState({ value: event.target.value });
-    if (this.props.changeOnKeyDown) {
-      console.log("changed");
-      this.props.onChange(event.target.value);
     }
   }
 

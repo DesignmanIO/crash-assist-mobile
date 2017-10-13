@@ -32,4 +32,8 @@ const MainDrawer = DrawerNavigator(
   }
 );
 
+MainDrawer.navigationOptions = {
+  header: null,
+};
+
 export default MainDrawer;

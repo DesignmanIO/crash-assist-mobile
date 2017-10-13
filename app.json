@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "crash-assist-rn",
+    "description": "An empty new project",
+    "slug": "crash-assist-rn",
+    "privacy": "public",
+    "sdkVersion": "21.0.0",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "./assets/CrashAssistIconV2HR.png",
+    "loading": {
+      "icon": "./assets/CrashAssistIconTransparentBG.png",
+      "hideExponentText": true,
+      "backgroundColor": "rgb(53,132,174)",
+      "backgroundImage": "./assets/CrashAssistBackground.png"
+    },
+    "packagerOpts": {
+      "assetExts": [
+        "ttf",
+        "mp4"
+      ]
+    },
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
