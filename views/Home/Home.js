@@ -9,7 +9,7 @@ import {
   ScrollView
 } from "@shoutem/ui";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Constants } from "expo";
+import Constants from "expo-constants";
 import { connectStyle } from "@shoutem/theme";
 import Meteor, { withTracker, getData } from "react-native-meteor";
 import { AsyncStorage, Alert, Modal } from "react-native";

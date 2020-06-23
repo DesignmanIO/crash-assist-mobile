@@ -1,4 +1,5 @@
-import Expo, { Font } from "expo";
+import Expo from "expo";
+import * as Font from 'expo-font';
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { createStackNavigator } from "react-navigation";

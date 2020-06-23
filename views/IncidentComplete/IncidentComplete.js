@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, ScrollView, Heading, Subtitle, Button, Text } from "@shoutem/ui";
 import { MaterialIcons } from "@expo/vector-icons";
 import Meteor, { Accounts } from "react-native-meteor";
-import { Constants } from "expo";
+import Constants from "expo-constants";
 import _ from "lodash";
 import { StackActions, NavigationActions } from "react-navigation";
 

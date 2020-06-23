@@ -10,7 +10,7 @@ import {
 } from "@shoutem/ui";
 import { connectStyle } from "@shoutem/theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { ImagePicker } from "expo";
+import * as ImagePicker from 'expo-image-picker';
 import { connectActionSheet } from "@expo/react-native-action-sheet";
 
 import renderIf from "../../../lib/renderIf";

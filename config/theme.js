@@ -1,76 +1,76 @@
 /**
  * Created by Julian on 2/13/17.
  */
-import { getTheme } from "@shoutem/ui";
-import { Constants } from "expo";
-import { Header } from "react-navigation";
-import { Platform } from "react-native";
+import { getTheme } from '@shoutem/ui';
+import Constants from 'expo-constants';
+import { Header } from 'react-navigation';
+import { Platform } from 'react-native';
 
-import colors from "./colors";
+import colors from './colors';
 
-const isIOS = Platform.OS === "ios";
-const isAndroid = Platform.OS === "android";
+const isIOS = Platform.OS === 'ios';
+const isAndroid = Platform.OS === 'android';
 const statusBarHeight = isIOS ? Constants.statusBarHeight : 0;
 const navBarHeight = Header.HEIGHT + 20; // isIOS ? 44 : 56;
 const constants = {
   isIOS,
   isAndroid,
   statusBarHeight,
-  navBarHeight
+  navBarHeight,
 };
 
 const theme = {
   ...getTheme(),
-  "shoutem.ui.Button": {
-    ...getTheme()["shoutem.ui.Button"],
-    ".primary": {
+  'shoutem.ui.Button': {
+    ...getTheme()['shoutem.ui.Button'],
+    '.primary': {
       backgroundColor: colors.primaryBlue,
-      "shoutem.ui.Text": {
-        color: colors.white
-      }
-    }
+      'shoutem.ui.Text': {
+        color: colors.white,
+      },
+    },
   },
-  "shoutem.ui.Heading": {
-    ...getTheme()["shoutem.ui.Heading"],
-    color: colors.primaryBlue
+  'shoutem.ui.Heading': {
+    ...getTheme()['shoutem.ui.Heading'],
+    color: colors.primaryBlue,
   },
-  "ca.component.MenuIcon": {
+  'ca.component.MenuIcon': {
     fontSize: 24,
-    paddingRight: 15
+    paddingRight: 15,
   },
-  "ca.view.Home": {
+  'ca.view.Home': {
     wrapper: {
       flexGrow: 1,
-      flexDirection: "column",
-      justifyContent: "space-between"
+      flexDirection: 'column',
+      justifyContent: 'space-between',
     },
     header: {
-      fontSize: 20
+      fontSize: 20,
     },
     incidentButton: {
       backgroundColor: colors.primaryBlue,
       borderWidth: 0,
       borderRadius: 0,
       height: 45,
-      alignSelf: "stretch"
-    }
+      alignSelf: 'stretch',
+    },
   },
-  "ca.view.Incident": {},
-  "ca.component.ArrayInput": {
+  'ca.view.Incident': {},
+  'ca.component.ArrayInput': {
     addButton: {
       backgroundColor: colors.primaryBlue,
-      borderRadius: 3
+      borderRadius: 3,
     },
     addButtonIcon: {
       color: colors.white,
-      fontSize: 20
+      fontSize: 20,
     },
     addButtonText: {
       color: colors.white,
-      fontSize: 14
-    }
+      fontSize: 14,
+    },
   },
-  "ca.component.TextInput": {
+  'ca.component.TextInput': {
     input: {
       borderColor: colors.lightGrey,
       borderWidth: 0.5,
@@ -80,14 +80,14 @@ const theme = {
       fontSize: 15,
       fontWeight: 'normal',
       fontFamily: 'Rubik-Regular',
-    }
+    },
   },
-  "ca.component.PhotoInput": {
+  'ca.component.PhotoInput': {
     touch: {
-      flex: 0
+      flex: 0,
     },
     wrapper: {
-      marginBottom: 20
+      marginBottom: 20,
     },
     innerWrapper: {
       backgroundColor: colors.white,
@@ -95,44 +95,44 @@ const theme = {
       width: 80,
       borderRadius: 3,
       borderWidth: 1,
-      borderStyle: "dashed",
+      borderStyle: 'dashed',
       borderColor: colors.grey,
-      alignItems: "center",
-      justifyContent: "space-around"
+      alignItems: 'center',
+      justifyContent: 'space-around',
     },
     icon: {
       color: colors.grey,
       fontSize: 20,
-      textAlign: "center"
+      textAlign: 'center',
     },
     image: {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: "transparent"
+      backgroundColor: 'transparent',
     },
     label: {
       paddingLeft: 20,
-      flex: 1
-    }
+      flex: 1,
+    },
   },
-  "ca.component.CheckBox": {
+  'ca.component.CheckBox': {
     checkbox: {
       marginHorizontal: 0,
       padding: 5,
       marginVertical: 5,
       borderWidth: 0.5,
       borderColor: colors.lightGrey,
-      borderRadius: 3
+      borderRadius: 3,
     },
     textStyle: {
       margin: 0,
       paddingHorizontal: 5,
-      flex: 1
-    }
-  }
+      flex: 1,
+    },
+  },
 };
 
 export { colors, constants };
