@@ -15,7 +15,7 @@ import {
 import Swiper from "react-native-swiper";
 import HTMLView from "react-native-htmlview";
 import { Field } from "simple-react-form";
-import Meteor, { createContainer } from "react-native-meteor";
+import Meteor, { withTracker } from "react-native-meteor";
 import hoistNonReactStatic from "hoist-non-react-statics";
 import { connect } from "react-redux";
 import _ from "lodash";
@@ -25,8 +25,7 @@ import { flatten } from "flat";
 import { Alert, InteractionManager } from "react-native";
 
 import renderIf from "../../lib/renderIf";
-import schema from "../../schema/Incidents";
-import { colors } from "../../config/theme";
+import { colors, constants } from "../../config/theme";
 import {
   safetyFirst,
   dosDonts,
@@ -37,26 +36,11 @@ import {
 } from "../../components/Steps";
 import { MenuButton } from "../../components/MainDrawer";
 import { Form } from "../../components/FormControls";
-// import {
-//   TextInput,
-//   NumberInput,
-//   TextareaInput,
-//   DateInput,
-//   PhotoInput,
-//   TelInput,
-//   EmailInput,
-//   ArrayInput,
-// } from '../../components/FormControls';
 
 import pageSchema from "../../page-schema";
 
 class Incident extends Component {
   static navigationOptions = {
-    // Nav options can be defined as a function of the navigation prop:
-    // title: ({ state }) => {
-    //   console.log(state);
-    //   return `Incident #${state.params.incidentId}`
-    // },
     header: null
   };
 
@@ -309,7 +293,7 @@ class Incident extends Component {
               </View>
             );
           }}
-          style={{ paddingBottom: 100, paddingTop: 10 }}
+          style={{ paddingBottom: 100, paddingTop: constants.statusBarHeight + 10 }}
           showsPagination
         >
           {formParts.map(step => (
@@ -336,11 +320,10 @@ export default hoistNonReactStatic(
   connect(({ appState }) => {
     return { incidentId: appState.incidentId };
   })(
-    createContainer(props => {
+    withTracker(props => {
       // const { incidentId } = props.navigation.state.params;
       const { incidentId } = props;
       const incidents = Meteor.collection("incidents");
-      incidents.simpleSchema = schema;
       const incidentSubscription = Meteor.subscribe(
         "SingleIncident",
         incidentId
@@ -351,7 +334,7 @@ export default hoistNonReactStatic(
         incident: Meteor.collection("incidents").findOne(incidentId),
         incidentReady: incidentSubscription.ready()
       };
-    }, connectStyle("ca.view.Incident", {})(Incident))
+    })(connectStyle("ca.view.Incident", {})(Incident))
   ),
   Incident
 );

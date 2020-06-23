@@ -1,18 +1,19 @@
 {
   "expo": {
-    "name": "crash-assist-rn",
+    "name": "crash-assist",
     "description": "An empty new project",
-    "slug": "crash-assist-rn",
+    "slug": "crash-assist",
     "privacy": "public",
-    "sdkVersion": "21.0.0",
-    "version": "1.0.0",
+    "sdkVersion": "28.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/CrashAssistIconV2HR.png",
+    "scheme": "crashassist",
     "loading": {
       "icon": "./assets/CrashAssistIconTransparentBG.png",
       "hideExponentText": true,
-      "backgroundColor": "rgb(53,132,174)",
+      "backgroundColor": "#3584ae",
       "backgroundImage": "./assets/CrashAssistBackground.png"
     },
     "packagerOpts": {
@@ -24,11 +25,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.crashassist.app",
-      "buildNumber": 1
+      "buildNumber": "2"
     },
     "android": {
       "package": "com.crashassist.app",
-      "versionCode": 101005,
+      "versionCode": 101006,
       "permissions": [
         "CAMERA"
       ]

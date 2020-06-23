@@ -11,13 +11,13 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Constants } from "expo";
 import { connectStyle } from "@shoutem/theme";
-import Meteor, { createContainer, getData } from "react-native-meteor";
+import Meteor, { withTracker, getData } from "react-native-meteor";
 import { AsyncStorage, Alert, Modal } from "react-native";
 import { NavigationActions } from "react-navigation";
 import { MaterialIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
-import { Store } from "../../main";
+import Store from "../../redux";
 import theme, { colors } from "../../config/theme";
 import {MenuButton} from '../../components/MainDrawer';
 const menuStyle = theme["ca.component.MenuIcon"];
@@ -147,7 +147,7 @@ class Home extends Component {
       );
     }
 
-    // console.log(incidentId);
+    console.log(incidentId);
     Store.dispatch({ type: "SET_INCIDENTID", incidentId });
     navigation.navigate("Incident", { incidentId });
     // navigation.dispatch(
@@ -228,7 +228,7 @@ Home.propTypes = {
   completeIncidents: PropTypes.bool
 };
 
-export default createContainer(props => {
+export default withTracker(props => {
   const pastIncidentsHandle = Meteor.subscribe("PastIncidents");
   // const loading = !pastIncidentsHandle.ready();
   const pastIncidents = Meteor.collection("incidents").find({
@@ -244,4 +244,4 @@ export default createContainer(props => {
     completeIncidents: !!pastIncidents.length,
     hideLoginDialog
   };
-}, connectStyle("ca.view.Home", {})(Home));
+})(connectStyle("ca.view.Home", {})(Home));

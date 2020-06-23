@@ -2,7 +2,7 @@
  * Created by Julian on 2/13/17.
  */
 import React from "react";
-import { DrawerNavigator } from "react-navigation";
+import { createDrawerNavigator } from "react-navigation";
 import { TouchableOpacity, Text } from "@shoutem/ui";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -11,7 +11,7 @@ import PastIncidents from "../../views/PastIncidents";
 import Incident from "../../views/Incident";
 // import theme from '../../config/theme';
 
-const MainDrawer = DrawerNavigator(
+const MainDrawer = createDrawerNavigator(
   {
     Home: { screen: Home },
     PastIncidents: { screen: PastIncidents },

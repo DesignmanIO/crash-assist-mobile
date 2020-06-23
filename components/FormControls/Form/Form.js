@@ -11,6 +11,7 @@ import { Form as SRForm, Field } from "simple-react-form";
 import _ from "lodash";
 import { flatten } from "flat";
 import HTMLView from "react-native-htmlview";
+import { SafeAreaView } from "react-navigation";
 
 import {
   NumberInput,
@@ -125,14 +126,14 @@ class Form extends Component {
   render() {
     const { collection, doc, formId, updateDoc, step } = this.props;
     const { formHeight } = this.state;
-    const { fields, title, subtitle, _id } = step;
+    const { _id } = step;
     // console.log(formHeight);
     return (
       <View styleName="inflexible md-gutter vertical space-around">
-        <Heading styleName="h-center" style={{ marginBottom: 10 }}>
-          {title}
+        <Heading styleName="h-center md-gutter-bottom">
+          {step.title}
         </Heading>
-        <HTMLView value={subtitle} />
+        <HTMLView value={step.subtitle} />
         <ScrollView
           styleName="sm-gutter-top"
           style={{ marginTop: 10, maxHeight: formHeight }}
@@ -171,7 +172,7 @@ class Form extends Component {
                     this.setState({ formHeight: layout.height });
                   }}
                 >
-                  {fields.map((field, index) => {
+                  {step.fields.map((field, index) => {
                     let arrayText = field.arrayText ? field.arrayText : "Item";
                     if (field.type === "divider") {
                       return (
@@ -206,8 +207,9 @@ class Form extends Component {
                                   fieldRef={(field, fieldName) =>
                                     this.fields[fieldName] = field}
                                   getNextField={fieldName => {
+                                    console.log(this.fields);
                                     const nextFieldName = _.get(
-                                      field,
+                                      this.fields,
                                       `fields[${subIndex + 1}].name`
                                     );
                                     if (nextFieldName) {
@@ -246,7 +248,7 @@ class Form extends Component {
                             this.fields[fieldName] = field}
                           getNextField={() => {
                             const nextFieldName = _.get(
-                              fields,
+                              step.fields,
                               `[${index + 1}].name`
                             );
                             console.log(fields, nextFieldName, index + 1);
@@ -259,7 +261,7 @@ class Form extends Component {
                           placeHolder={field.label}
                           arrayText={arrayText}
                           returnKeyType={
-                            fields.length === index ? "done" : "next"
+                            step.fields.length === index ? "done" : "next"
                           }
                         />
                       </View>

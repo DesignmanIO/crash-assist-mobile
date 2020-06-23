@@ -1,5 +1,5 @@
 const appState = (state = {}, action) => {
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
     case "SET_INCIDENTID": {
       const { incidentId } = action;
@@ -8,14 +8,15 @@ const appState = (state = {}, action) => {
         incidentId
       };
     }
-    case "persist/REHYDRATE": {
-      const { payload } = action;
-      return { ...state, ...payload.appState };
-    }
+    // case "persist/REHYDRATE": {
+    //   const { payload } = action;
+    //   console.log(payload);
+    //   return { ...state, ...payload.appState };
+    // }
     default: {
       return state;
     }
   }
 };
 
-export { appState };
+export default appState;

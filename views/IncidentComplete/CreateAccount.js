@@ -4,7 +4,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import Meteor, { Accounts } from "react-native-meteor";
 import { Constants } from "expo";
 import { Alert } from "react-native";
-import {NavigationActions} from 'react-navigation';
+import { StackActions, NavigationActions } from "react-navigation";
 
 import { Form } from "../../components/FormControls";
 import createAccount from "./CreateAccount.json";
@@ -91,10 +91,12 @@ class CreateAccount extends Component {
         });
       }
     });
-    this.props.navigation.dispatch(NavigationActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({routeName: "MainDrawer"})]
-    }));
+    this.props.navigation.dispatch(
+      StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName: "MainDrawer" })]
+      })
+    );
   }
 
   render() {
@@ -118,7 +120,14 @@ class CreateAccount extends Component {
           </Button>
           <Button
             onPress={() => {
-              console.log("done!");
+              this.props.navigation.dispatch(
+                StackActions.reset({
+                  index: 0,
+                  actions: [
+                    NavigationActions.navigate({ routeName: "MainDrawer" })
+                  ]
+                })
+              );
             }}
           >
             <Text>

@@ -13,15 +13,15 @@ import {
   Caption
 } from "@shoutem/ui";
 import { FlatList } from "react-native";
-import Meteor, { createContainer } from "react-native-meteor";
+import Meteor, { withTracker } from "react-native-meteor";
 import { connectStyle } from "@shoutem/theme";
 import hoistStatics from "hoist-non-react-statics";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import { Store } from "../../main";
+import Store from "../../redux";
 import { MenuButton } from "../../components/MainDrawer";
 import { renderIf } from "../../lib";
-import {colors} from '../../config/theme';
+import { colors } from "../../config/theme";
 
 class PastIncidents extends Component {
   static navigationOptions = {
@@ -121,7 +121,7 @@ PastIncidents.propTypes = {
 };
 
 export default (PastIncidentsContainer = hoistStatics(
-  createContainer(() => {
+  withTracker(() => {
     const pastIncidentsHandle = Meteor.subscribe("PastIncidents");
     const loading = !pastIncidentsHandle.ready();
     const pastIncidents = Meteor.collection("incidents").find({
@@ -134,6 +134,6 @@ export default (PastIncidentsContainer = hoistStatics(
       loading,
       pastIncidents
     };
-  }, connectStyle("ca.views.PastIncidents", {})(PastIncidents)),
+  })(connectStyle("ca.views.PastIncidents", {})(PastIncidents)),
   PastIncidents
 ));

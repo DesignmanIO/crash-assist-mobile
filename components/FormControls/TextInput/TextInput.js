@@ -3,7 +3,7 @@
  */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { TextInput as ShoutemInput } from "@shoutem/ui";
+import { TextInput as RNInput } from "react-native";
 import { connectStyle } from "@shoutem/theme";
 import _ from "lodash";
 import { InteractionManager } from "react-native";
@@ -22,7 +22,8 @@ class TextInput extends Component {
   };
 
   static defaultProps = {
-    keyboardType: "default"
+    keyboardType: "default",
+    passProps: {}
   };
 
   constructor(props) {
@@ -52,16 +53,20 @@ class TextInput extends Component {
   }
 
   render() {
-    const { style, passProps, fieldName } = this.props;
+    const { passProps, onChange, fieldName, style, ...inputProps } = this.props;
     const { value, height } = this.state;
-    const inputProps = { ...this.props };
-    delete inputProps.onChange;
-    delete inputProps.passProps;
-    // console.log('input props for ', this.props.label, inputProps);
+    // console.log('input props for ', this.props.label, Object.keys(inputProps));
+    // console.log(
+    //   passProps.fieldRef,
+    //   inputProps.keyboardType,
+    //   passProps.inputType
+    // );
     return (
-      <ShoutemInput
-        {...this.inputProps}
-        inputRef={input => _.invoke(passProps, "fieldRef", [input, fieldName])}
+      <RNInput
+        {...inputProps}
+        ref={input => {
+          _.invoke(passProps, "fieldRef", [input, fieldName]);
+        }}
         value={value}
         placeholder={this.props.label}
         disabled={this.props.disabled}
@@ -70,8 +75,8 @@ class TextInput extends Component {
           this.onChange(text);
         }}
         onSubmitEditing={() => {
+          // console.log('nextField', passProps.getNextField);
           const nextField = _.invoke(passProps, "getNextField", fieldName);
-          //console.log(nextField);
           if (nextField) {
             nextField.focus();
           }

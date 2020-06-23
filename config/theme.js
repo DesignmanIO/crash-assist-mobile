@@ -2,7 +2,22 @@
  * Created by Julian on 2/13/17.
  */
 import { getTheme } from "@shoutem/ui";
+import { Constants } from "expo";
+import { Header } from "react-navigation";
+import { Platform } from "react-native";
+
 import colors from "./colors";
+
+const isIOS = Platform.OS === "ios";
+const isAndroid = Platform.OS === "android";
+const statusBarHeight = isIOS ? Constants.statusBarHeight : 0;
+const navBarHeight = Header.HEIGHT + 20; // isIOS ? 44 : 56;
+const constants = {
+  isIOS,
+  isAndroid,
+  statusBarHeight,
+  navBarHeight
+};
 
 const theme = {
   ...getTheme(),
@@ -10,8 +25,8 @@ const theme = {
     ...getTheme()["shoutem.ui.Button"],
     ".primary": {
       backgroundColor: colors.primaryBlue,
-      'shoutem.ui.Text': {
-        color: colors.white,
+      "shoutem.ui.Text": {
+        color: colors.white
       }
     }
   },
@@ -60,7 +75,11 @@ const theme = {
       borderColor: colors.lightGrey,
       borderWidth: 0.5,
       borderRadius: 3,
-      marginBottom: 20
+      marginBottom: 20,
+      paddingLeft: 10,
+      fontSize: 15,
+      fontWeight: 'normal',
+      fontFamily: 'Rubik-Regular',
     }
   },
   "ca.component.PhotoInput": {
@@ -116,5 +135,5 @@ const theme = {
   }
 };
 
-export { colors };
+export { colors, constants };
 export default theme;
