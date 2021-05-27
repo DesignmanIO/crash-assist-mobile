@@ -1,27 +1,18 @@
-import React, { Component } from "react";
-import {
-  View,
-  Button,
-  Image,
-  Text,
-  Heading,
-  TouchableOpacity,
-  ScrollView
-} from "@shoutem/ui";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import Constants from "expo-constants";
-import { connectStyle } from "@shoutem/theme";
-import Meteor, { withTracker, getData } from "react-native-meteor";
-import { AsyncStorage, Alert, Modal } from "react-native";
-import { NavigationActions } from "react-navigation";
-import { MaterialIcons } from "@expo/vector-icons";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { View, Button, Image, Text, Heading } from '@shoutem/ui';
+import Constants from 'expo-constants';
+import { connectStyle } from '@shoutem/theme';
+import Meteor, { withTracker, getData } from 'react-native-meteor';
+import { AsyncStorage, Alert, Modal } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import PropTypes from 'prop-types';
 
-import Store from "../../redux";
-import theme, { colors } from "../../config/theme";
-import {MenuButton} from '../../components/MainDrawer';
-const menuStyle = theme["ca.component.MenuIcon"];
-import Disclaimer from "../../components/Disclaimer";
+import Store from '../../redux';
+import theme, { colors } from '../../config/theme';
+import { MenuButton } from '../../components/MainDrawer';
+const menuStyle = theme['ca.component.MenuIcon'];
+import Disclaimer from '../../components/Disclaimer';
+import withSafeArea from '../../lib/withSafeArea';
 // console.log(menuStyle);
 // import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -35,25 +26,25 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAgreement: false
+      showAgreement: false,
     };
   }
 
   async componentWillMount() {
-    const token = await AsyncStorage.getItem("reactnativemeteor_usertoken");
+    const token = await AsyncStorage.getItem('reactnativemeteor_usertoken');
     console.log(token);
     if (token) {
-      console.log("should be logged in");
+      console.log('should be logged in');
     } else {
       Meteor.call(
-        "login",
+        'login',
         { deviceId: Constants.deviceId },
         (error, result) => {
-          AsyncStorage.setItem("reactnativemeteor_usertoken", result.token);
+          AsyncStorage.setItem('reactnativemeteor_usertoken', result.token);
           getData()._tokenIdSaved = result.token;
           Meteor._userIdSaved = result.id;
-          console.log("logged in first time", error, result);
-        }
+          console.log('logged in first time', error, result);
+        },
       );
     }
   }
@@ -133,7 +124,7 @@ class Home extends Component {
   goToIncident() {
     const { navigation } = this.props;
     let incidentId;
-    console.log("going to incident");
+    console.log('going to incident');
     if (!Meteor.userId()) {
       Alert.alert("Not logged in! Something's wrong...");
       return;
@@ -141,15 +132,15 @@ class Home extends Component {
     if (this.props.incompleteIncident) {
       incidentId = this.props.incompleteIncident._id;
     } else {
-      incidentId = Meteor.collection("incidents").insert(
+      incidentId = Meteor.collection('incidents').insert(
         { completed: false, userId: Meteor.userId() },
-        (err, res) => console.log(err, res)
+        (err, res) => console.log(err, res),
       );
     }
 
     console.log(incidentId);
-    Store.dispatch({ type: "SET_INCIDENTID", incidentId });
-    navigation.navigate("Incident", { incidentId });
+    Store.dispatch({ type: 'SET_INCIDENTID', incidentId });
+    navigation.navigate('Incident', { incidentId });
     // navigation.dispatch(
     //   NavigationActions.navigate({
     //     routeName: 'NewIncident',
@@ -163,7 +154,7 @@ class Home extends Component {
   }
 
   render() {
-    const { style } = this.props;
+    const { style, insets } = this.props;
     // this.props.navigation.navigate('CreateAccount');
     return (
       <View
@@ -172,10 +163,10 @@ class Home extends Component {
       >
         <MenuButton navigation={this.props.navigation} />
         <Heading styleName="h-center xl-gutter-top" style={style.header}>
-          Remain Calm, {"\n"}We'll help you through this!
+          Remain Calm, {'\n'}We'll help you through this!
         </Heading>
         <Image
-          source={require("../../assets/crash.png")}
+          source={require('../../assets/crash.png')}
           style={{ width: 240, height: 48 }}
         />
         <Modal visible={this.state.showAgreement} animationType="slide">
@@ -184,10 +175,10 @@ class Home extends Component {
               name="close"
               size={22}
               onPress={() => {
-                console.log("close");
+                console.log('close');
                 this.setState({ showAgreement: false });
               }}
-              style={{ position: "absolute", top: 25, right: 20, zIndex: 1 }}
+              style={{ position: 'absolute', top: 25, right: 20, zIndex: 1 }}
             />
             <Disclaimer />
             <Button
@@ -197,24 +188,22 @@ class Home extends Component {
                   this.goToIncident();
                 }, 300);
               }}
-              style={style.incidentButton}
+              style={{ ...style.incidentButton, paddingBottom: insets.bottom }}
               styleName="secondary"
             >
-              <Text>
-                Agree
-              </Text>
+              <Text>Agree</Text>
             </Button>
           </View>
         </Modal>
         <Button
-          style={style.incidentButton}
+          style={{ ...style.incidentButton, paddingBottom: insets.bottom }}
           styleName="vertical h-center v-center secondary"
           onPress={() => this.setState({ showAgreement: true })}
         >
           <Text>
             {this.props.incompleteIncident
-              ? "Continue Incident"
-              : "New Incident"}
+              ? 'Continue Incident'
+              : 'New Incident'}
           </Text>
         </Button>
       </View>
@@ -225,23 +214,23 @@ class Home extends Component {
 Home.propTypes = {
   style: PropTypes.object,
   incompleteIncident: PropTypes.object,
-  completeIncidents: PropTypes.bool
+  completeIncidents: PropTypes.bool,
 };
 
 export default withTracker(props => {
-  const pastIncidentsHandle = Meteor.subscribe("PastIncidents");
+  const pastIncidentsHandle = Meteor.subscribe('PastIncidents');
   // const loading = !pastIncidentsHandle.ready();
-  const pastIncidents = Meteor.collection("incidents").find({
-    completed: true
+  const pastIncidents = Meteor.collection('incidents').find({
+    completed: true,
   });
   const hideLoginDialog = true; //Meteor.user() || {}, "profile", "hideLoginDialog") || true;
   // console.log(Meteor.collection('incidents').find({}), Meteor.userId());
   return {
     user: Meteor.user(),
-    incompleteIncident: Meteor.collection("incidents").findOne({
-      completed: false
+    incompleteIncident: Meteor.collection('incidents').findOne({
+      completed: false,
     }),
     completeIncidents: !!pastIncidents.length,
-    hideLoginDialog
+    hideLoginDialog,
   };
-})(connectStyle("ca.view.Home", {})(Home));
+})(withSafeArea(connectStyle('ca.view.Home', {})(Home)));

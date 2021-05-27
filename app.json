@@ -3,8 +3,10 @@
     "name": "crash-assist",
     "description": "An empty new project",
     "slug": "crash-assist",
+    "backgroundColor": "#cccccc",
+    "sdkVersion": "37.0.0",
     "privacy": "public",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/CrashAssistIconV2HR.png",
@@ -16,10 +18,7 @@
       "backgroundImage": "./assets/CrashAssistBackground.png"
     },
     "packagerOpts": {
-      "assetExts": [
-        "ttf",
-        "mp4"
-      ]
+      "assetExts": ["ttf", "mp4"]
     },
     "ios": {
       "supportsTablet": true,
@@ -29,9 +28,7 @@
     "android": {
       "package": "com.crashassist.app",
       "versionCode": 101006,
-      "permissions": [
-        "CAMERA"
-      ]
+      "permissions": ["CAMERA"]
     }
   }
 }

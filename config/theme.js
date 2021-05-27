@@ -51,7 +51,6 @@ const theme = {
       backgroundColor: colors.primaryBlue,
       borderWidth: 0,
       borderRadius: 0,
-      height: 45,
       alignSelf: 'stretch',
     },
   },

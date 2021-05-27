@@ -1,7 +1,7 @@
 /**
  * Created by Julian on 2/13/17.
  */
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   Heading,
@@ -10,38 +10,39 @@ import {
   Text,
   Button,
   TouchableOpacity,
-  Spinner
-} from "@shoutem/ui";
-import Swiper from "react-native-swiper";
-import HTMLView from "react-native-htmlview";
-import { Field } from "simple-react-form";
-import Meteor, { withTracker } from "react-native-meteor";
-import hoistNonReactStatic from "hoist-non-react-statics";
-import { connect } from "react-redux";
-import _ from "lodash";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { connectStyle } from "@shoutem/theme";
-import { flatten } from "flat";
-import { Alert, InteractionManager } from "react-native";
+  Spinner,
+} from '@shoutem/ui';
+import Swiper from 'react-native-swiper';
+import HTMLView from 'react-native-htmlview';
+import { Field } from 'simple-react-form';
+import Meteor, { withTracker } from 'react-native-meteor';
+import hoistNonReactStatic from 'hoist-non-react-statics';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connectStyle } from '@shoutem/theme';
+import { flatten } from 'flat';
+import { Alert, InteractionManager } from 'react-native';
 
-import renderIf from "../../lib/renderIf";
-import { colors, constants } from "../../config/theme";
+import renderIf from '../../lib/renderIf';
+import { colors, constants } from '../../config/theme';
 import {
   safetyFirst,
   dosDonts,
   witnessInfo,
   driverInfo,
   sceneInfo,
-  nextSteps
-} from "../../components/Steps";
-import { MenuButton } from "../../components/MainDrawer";
-import { Form } from "../../components/FormControls";
+  nextSteps,
+} from '../../components/Steps';
+import { MenuButton } from '../../components/MainDrawer';
+import { Form } from '../../components/FormControls';
 
-import pageSchema from "../../page-schema";
+import pageSchema from '../../page-schema';
+import withSafeArea from '../../lib/withSafeArea';
 
 class Incident extends Component {
   static navigationOptions = {
-    header: null
+    header: null,
   };
 
   constructor(props) {
@@ -51,11 +52,11 @@ class Incident extends Component {
       incident: {},
       loading: true,
       stagedChanges: {},
-      currentStep: _.get(this.props, "incident.currentStep", 0)
+      currentStep: _.get(this.props, 'incident.currentStep', 0),
     };
 
     this.saveIncident = _.debounce(this.saveIncident, 1000, {
-      trailing: true
+      trailing: true,
     }).bind(this);
   }
 
@@ -69,11 +70,11 @@ class Incident extends Component {
       }
     } else if (nextProps.incident !== this.state.incident) {
       InteractionManager.runAfterInteractions(() => {
-        console.log("Incident updated, setting state");
+        console.log('Incident updated, setting state');
         this.setState({ incident: nextProps.incident, loading: false });
       });
     } else {
-      console.log("no incident for some reason", nextProps);
+      console.log('no incident for some reason', nextProps);
     }
   }
 
@@ -84,7 +85,7 @@ class Incident extends Component {
       { $set: { currentStep: index } },
       (err, res) => {
         // console.log(err, res);
-      }
+      },
     );
   }
 
@@ -96,11 +97,11 @@ class Incident extends Component {
         incident,
         // aggregate staged changes with previous staged changes
         stagedChanges: _.merge(this.state.stagedChanges, changesToStage),
-        loading: true
+        loading: true,
       },
       () => {
         this.saveIncident();
-      }
+      },
     );
   }
 
@@ -112,12 +113,12 @@ class Incident extends Component {
     this.props.incidents.update(
       incident._id,
       {
-        $set: mongoReadyChanges
+        $set: mongoReadyChanges,
       },
       (err, res) => {
-        console.log("saved", err, res);
+        console.log('saved', err, res);
         this.setState({ stagedChanges: {}, loading: false });
-      }
+      },
     );
   }
 
@@ -131,14 +132,14 @@ class Incident extends Component {
       witnessInfo,
       driverInfo,
       sceneInfo,
-      nextSteps
+      nextSteps,
     ];
-    const { incident } = this.props;
+    const { incident, insets } = this.props;
 
     return (
       <View styleName="fill-parent">
         {renderIf(this.state.loading, () => (
-          <Spinner style={{ position: "absolute", top: 15, right: 15 }} />
+          <Spinner style={{ position: 'absolute', top: 15, right: 15 }} />
         ))}
         <MenuButton navigation={this.props.navigation} />
         <Swiper
@@ -151,26 +152,27 @@ class Incident extends Component {
               <View
                 styleName="vertical"
                 style={{
-                  backgroundColor: "white",
+                  backgroundColor: 'white',
                   shadowOpacity: 0.4,
                   shadowRadius: 4,
-                  paddingTop: 7
+                  paddingTop: 7,
+                  paddingBottom: insets.bottom,
                 }}
               >
                 <View
                   styleName="vertical"
                   style={{
                     borderBottomWidth: 0.5,
-                    borderBottomColor: "#ccc",
-                    paddingBottom: 8
+                    borderBottomColor: '#ccc',
+                    paddingBottom: 8,
                   }}
                 >
                   <View
                     style={{
                       backgroundColor: colors.green,
-                      alignSelf: "stretch",
+                      alignSelf: 'stretch',
                       height: 4,
-                      bottom: -14
+                      bottom: -14,
                     }}
                   />
                   <View styleName="horizontal v-center space-between">
@@ -181,11 +183,11 @@ class Incident extends Component {
                           onPress={() => {
                             const newIndex = stepIndex - index;
                             console.log(
-                              "going to ",
+                              'going to ',
                               newIndex,
                               pageCount,
                               index,
-                              stepIndex
+                              stepIndex,
                             );
                             context.scrollBy(newIndex);
                             this.setIndex(newIndex);
@@ -198,13 +200,13 @@ class Incident extends Component {
                               width: dimension,
                               height: dimension,
                               borderRadius: dimension,
-                              marginHorizontal: 10
+                              marginHorizontal: 10,
                             }}
                             styleName="horizontal v-center h-center"
                           >
                             <Text
                               styleName="h-center v-center"
-                              style={{ color: "white" }}
+                              style={{ color: 'white' }}
                             >
                               {stepIndex === index && stepIndex + 1}
                             </Text>
@@ -224,9 +226,9 @@ class Incident extends Component {
                       }
                     }}
                     style={{
-                      borderColor: "#ccc",
+                      borderColor: '#ccc',
                       borderRightWidth: 0.5,
-                      marginVertical: 5
+                      marginVertical: 5,
                     }}
                   >
                     <Icon name="chevron-left" />
@@ -242,7 +244,7 @@ class Incident extends Component {
                           this.setIndex(context.state.index + 1);
                         }}
                         style={{
-                          marginVertical: 5
+                          marginVertical: 5,
                         }}
                       >
                         <Text>Next</Text>
@@ -254,46 +256,49 @@ class Incident extends Component {
                         styleName="full-width"
                         onPress={async () => {
                           if (incident.completed) {
-                            this.props.navigation.navigate("Home");
+                            this.props.navigation.navigate('Home');
                             return;
                           }
                           const finished = await new Promise(resolve => {
                             Alert.alert(
-                              "Finalize?",
-                              "You can always come back and edit this later",
+                              'Finalize?',
+                              'You can always come back and edit this later',
                               [
                                 {
-                                  text: "Proceed",
-                                  type: "default",
-                                  onPress: () => resolve(true)
+                                  text: 'Proceed',
+                                  type: 'default',
+                                  onPress: () => resolve(true),
                                 },
                                 {
-                                  text: "Cancel",
-                                  type: "cancel",
-                                  onPress: () => resolve(false)
-                                }
-                              ]
+                                  text: 'Cancel',
+                                  type: 'cancel',
+                                  onPress: () => resolve(false),
+                                },
+                              ],
                             );
                           });
                           if (finished) {
                             this.updateIncident({ completed: true });
-                            this.props.navigation.navigate("IncidentComplete");
+                            this.props.navigation.navigate('IncidentComplete');
                           }
                         }}
                         style={{
-                          marginVertical: 5
+                          marginVertical: 5,
                         }}
                       >
                         <Text>Done</Text>
                         <Icon name="check" />
                       </Button>
-                    )
+                    ),
                   )}
                 </View>
               </View>
             );
           }}
-          style={{ paddingBottom: 100, paddingTop: constants.statusBarHeight + 10 }}
+          style={{
+            paddingBottom: 100,
+            paddingTop: constants.statusBarHeight + 10,
+          }}
           showsPagination
         >
           {formParts.map(step => (
@@ -317,24 +322,26 @@ class Incident extends Component {
 }
 
 export default hoistNonReactStatic(
-  connect(({ appState }) => {
-    return { incidentId: appState.incidentId };
-  })(
-    withTracker(props => {
-      // const { incidentId } = props.navigation.state.params;
-      const { incidentId } = props;
-      const incidents = Meteor.collection("incidents");
-      const incidentSubscription = Meteor.subscribe(
-        "SingleIncident",
-        incidentId
-      );
-      return {
-        incidentId,
-        incidents,
-        incident: Meteor.collection("incidents").findOne(incidentId),
-        incidentReady: incidentSubscription.ready()
-      };
-    })(connectStyle("ca.view.Incident", {})(Incident))
+  withSafeArea(
+    connect(({ appState }) => {
+      return { incidentId: appState.incidentId };
+    })(
+      withTracker(props => {
+        // const { incidentId } = props.navigation.state.params;
+        const { incidentId } = props;
+        const incidents = Meteor.collection('incidents');
+        const incidentSubscription = Meteor.subscribe(
+          'SingleIncident',
+          incidentId,
+        );
+        return {
+          incidentId,
+          incidents,
+          incident: Meteor.collection('incidents').findOne(incidentId),
+          incidentReady: incidentSubscription.ready(),
+        };
+      })(connectStyle('ca.view.Incident', {})(Incident)),
+    ),
   ),
-  Incident
+  Incident,
 );
