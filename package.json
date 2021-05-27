@@ -1,6 +1,6 @@
 {
   "name": "crash-assist",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Crash Assist native app",
   "author": null,
   "private": true,
@@ -8,7 +8,7 @@
   "scripts": {
     "postinstall": "bash fixPackages.sh",
     "version": "json -I -f ./app.json -e 'this.expo.version=\"'$npm_package_version'\"'",
-    "postversion": "git push && exp p"
+    "postversion": "git push"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^1.0.2",
@@ -27,6 +27,7 @@
     "expo-linear-gradient": "~8.1.0",
     "flat": "^5.0.0",
     "hoist-non-react-statics": "^3.3.2",
+    "json": "^11.0.0",
     "moment": "^2.22.2",
     "process": "^0.11.10",
     "prop-types": "^15.6.1",
@@ -39,6 +40,7 @@
     "react-native-meteor": "git+https://github.com/pmogollons/react-native-meteor.git",
     "react-native-modal-datetime-picker": "^8.7.1",
     "react-native-photo-view": "github:shoutem/react-native-photo-view#0ffa1481f6b6cb8663cb291b7db1d6644440584d",
+    "react-native-safe-area-context": "0.7.3",
     "react-native-swiper": "^1.5.12",
     "react-native-vector-icons": "^6.6.0",
     "react-native-webview": "9.4.0",
@@ -47,8 +49,7 @@
     "redux": "^4.0.0",
     "redux-persist": "^5.10.0",
     "sha1": "^1.1.1",
-    "simple-react-form": "^2.0.0",
-    "react-native-safe-area-context": "0.7.3"
+    "simple-react-form": "^2.0.0"
   },
   "react-native": {
     "fs": "react-native-level-fs",
