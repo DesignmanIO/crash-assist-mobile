@@ -28,7 +28,7 @@
     "flat": "^5.0.0",
     "hoist-non-react-statics": "^3.3.2",
     "json": "^11.0.0",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "process": "^0.11.10",
     "prop-types": "^15.6.1",
     "react": "16.9.0",
